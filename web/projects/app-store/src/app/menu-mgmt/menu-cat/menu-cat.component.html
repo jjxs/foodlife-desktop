@@ -1,0 +1,140 @@
+<div class="componect-container">
+    <div class="search">
+        <div
+            fxLayout="row"
+            fxLayoutAlign="start center">
+            <div fxFlex=50
+                style="padding-left: 15px;">
+                <button mat-icon-button matTooltip="更新" matTooltipPosition="below" (click)="onSearch()">
+                    <mat-icon class="mat-icon-edit">
+                        refresh
+                    </mat-icon>
+                </button>
+                <button mat-icon-button *ngIf="selection.hasValue()" matTooltip="一括削除" matTooltipPosition="below"
+                    (click)="onDelete(child)">
+                    <mat-icon class="mat-icon-edit">
+                        delete
+                    </mat-icon>
+                </button>
+                
+                <label style="margin-left:10px;">
+                <mat-checkbox class="checkbox" id="check_box" (change)="kitchen($event)"></mat-checkbox>
+                キッチン
+                </label>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px">
+            <mat-icon class="mat-icon-click" *ngIf="editMode" matTooltip="完了" matTooltipPosition="before"
+                (click)="onEdit()">
+                done
+            </mat-icon>
+            <mat-icon class="mat-icon-click" *ngIf="editMode" matTooltip="編集取消" matTooltipPosition="below"
+                (click)="onCancelEdit()">
+                clear
+            </mat-icon>
+            <!-- <mat-icon *ngIf="!expandFlg" class="mat-icon-click" matTooltip="すべて展開" matTooltipPosition="after"
+                (click)="onAllToggleExpand(parent)">
+                view_list
+            </mat-icon>
+            <mat-icon *ngIf="expandFlg" class="mat-icon-click" matTooltip="すべて折り畳み" matTooltipPosition="after"
+                (click)="onAllToggleCollapse(parent)">
+                view_column
+            </mat-icon> -->
+        </div>
+    </div>
+    <div class="table-container" fxLayout="column" [formGroup]="tableForm" fxLayoutAlign="start center">
+        <table class="app-grid" style="width:100%">
+            <tr>
+                <th>
+                    カテゴリー名
+                </th>
+                <th>
+                    テーマ
+                </th>
+                <th>
+                    表示条数
+                </th>
+                <th>
+                    表示順
+                </th>
+                <th></th>
+            </tr>
+            <ng-container *ngFor="let parent of dataSource.data; let i = index" formArrayName="parentCat">
+                <tr style="background-color:#b0b0b0">
+                    <td [formGroupName]="i">
+                        {{parent.display_name}}
+                    </td>
+                    <td [formGroupName]="i">
+                        {{parent.theme_id}}
+                    </td>
+                    <td [formGroupName]="i">
+                        {{parent.menu_count}}
+                    </td>
+                    <td [formGroupName]="i">
+                        {{parent.display_order}}
+                    </td>
+
+                    <td>
+                        <button mat-icon-button matTooltip="編集" matTooltipPosition="before" (click)="onEdit(parent,'parent')">
+                            <mat-icon class="mat-icon-edit">
+                                edit_outline
+                            </mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="onToggle(parent, i)">
+                            <mat-icon *ngIf="parent.display === 'none'" matTooltip="展開" matTooltipPosition="after">
+                                view_list
+                            </mat-icon>
+                            <mat-icon *ngIf="parent.display !== 'none'" matTooltip="折り畳み" matTooltipPosition="after">
+                                view_column
+                            </mat-icon>
+                        </button>
+                         <button mat-icon-button *ngIf="parent.children.length==0 && showkitchen==false"
+                                    matTooltip="削除"
+                                    matTooltipPosition="after"
+                                    (click)="onDelete(parent)">
+                                <mat-icon class="mat-icon-edit">
+                                    delete
+                                </mat-icon>
+                            </button>
+                    </td>
+                </tr>
+                <ng-container [formGroupName]="i">
+                    <tr *ngFor="let child of parent.children; let j = index" formArrayName="children"
+                        [style.display]="parent.display">
+                        <td [formGroupName]="j" style="padding-left:40px;" class="mat-cell">
+                            {{child.display_name}}
+                        </td>
+
+                        <td [formGroupName]="j" class="mat-cell">
+                            {{showThemeName(child.theme_id)}}
+                        </td>
+
+                        <td [formGroupName]="j" class="mat-cell">
+                            {{child.menu_count}}
+                        </td>
+                        <td [formGroupName]="j" class="mat-cell">
+                            {{child.display_order}}
+                        </td>
+                        <td class="mat-cell">
+                            <button mat-icon-button matTooltip="編集" matTooltipPosition="before" (click)="onEdit(child,'child')">
+                                <mat-icon class="mat-icon-edit">
+                                    edit_outline
+                                </mat-icon>
+                            </button>
+                            
+                            <button mat-icon-button
+                                    matTooltip="削除"
+                                    matTooltipPosition="after"
+                                    (click)="onDelete(child)">
+                                <mat-icon class="mat-icon-edit">
+                                    delete
+                                </mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+        </table>
+        <app-table-empty-message [dataSource]="dataSource" #catempty></app-table-empty-message>
+    </div>
+</div>

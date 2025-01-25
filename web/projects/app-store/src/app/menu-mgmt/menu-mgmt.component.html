@@ -1,0 +1,59 @@
+<mat-sidenav-container class="mat-sidenav-content">
+    <div fxLayout="row"
+         style="height: 100%;"
+         fxLayoutAlign="center none">
+        <div class="list"
+             fxLayout="column"
+             fxFlex=100>
+            <div [ngClass]="{'hide-div': detailFlg}">
+                <mat-toolbar color="basic">
+                    <mat-button-toggle-group [(ngModel)]="listSwitch">
+                        <mat-button-toggle value="theme">テーマ</mat-button-toggle>
+                        <mat-button-toggle value="C">カテゴリー</mat-button-toggle>
+                        <mat-button-toggle value="M">メニュー</mat-button-toggle>
+                        <mat-button-toggle value="T">作り方</mat-button-toggle>
+                    </mat-button-toggle-group>
+                    <span class="toolbar-spacer"></span>
+                    <input type="file"
+                    style="display: none"
+                    #fileInput
+                    id="fileField"
+                    accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    (change)="onChangeFileInput(this)">
+                    <button mat-raised-button
+                            color="primary"
+                            (click)="onUploadMenu()"
+                            *ngIf="listSwitch === 'M'">メニューアップロード
+                    </button>&nbsp;&nbsp;
+                    <button mat-raised-button
+                            color="primary"
+                            *ngIf="listSwitch === 'M'"
+                            (click)="onEditMenu(true)">メニュー追加</button>
+                    <button mat-raised-button
+                            color="primary"
+                            *ngIf="listSwitch === 'C'"
+                            (click)="onAddCat()">カテゴリー追加</button>
+                    <button mat-raised-button
+                            color="primary"
+                            *ngIf="listSwitch === 'T'"
+                            (click)="onAddOption()">作り方追加</button>
+                </mat-toolbar>
+                <app-menu-list *ngIf="listSwitch === 'M'"
+                               (edit)="onEditMenu($event)"
+                               #menu></app-menu-list>
+                <app-menu-cat *ngIf="listSwitch === 'C'"
+                              (saved)="onRefresh()"
+                              #cat></app-menu-cat>
+                <app-menu-option *ngIf="listSwitch === 'T'"
+                              (saved)="onRefresh()"
+                              #option></app-menu-option>
+                <app-menu-themelist *ngIf="listSwitch === 'theme'"
+                              #option></app-menu-themelist>
+            </div>
+            <!-- <app-menu-detail [ngClass]="{'hide-div': !detailFlg}"
+                             [data]="menuDetailData"
+                             (saved)="onRefresh()"
+                             (edit)="onEditMenu($event)"></app-menu-detail> -->
+        </div>
+    </div>
+</mat-sidenav-container>

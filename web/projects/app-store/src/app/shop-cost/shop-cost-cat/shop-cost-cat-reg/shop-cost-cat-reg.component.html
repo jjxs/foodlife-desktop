@@ -1,0 +1,39 @@
+<div [formGroup]="dataForm"
+     fxLayout="column"
+     fxLayoutAlign="start center">
+    <div style="margin-left: 5px;font-size: 1.5rem !important;">カテゴリー詳細編集</div>
+    <div fxLayout="row"
+         style="width: 80%;margin-top:40px;">
+        <mat-form-field fxFlex=100>
+            <input matInput
+                   placeholder="カテゴリー名"
+                   required
+                   formControlName="category_name">
+        </mat-form-field>
+        <app-errors [formGroup]="dataForm"></app-errors>
+    </div>
+    <div fxLayout="row"
+         *ngIf="hasParent"
+         style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <mat-select placeholder="親"
+                        formControlName="parent_id">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let item of parents"
+                            [value]="item.id">
+                    {{item.category_name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row"
+         style="width: 80%;"
+         fxLayoutAlign="end none">
+        <button mat-raised-button
+                color="primary"
+                (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button
+                color="primary"
+                (click)="onSave()">保存</button>
+    </div>
+</div>

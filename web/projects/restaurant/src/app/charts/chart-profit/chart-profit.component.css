@@ -1,0 +1,9 @@
+table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+td.mat-cell {
+    font-size: 12px;
+    text-align: left;
+}

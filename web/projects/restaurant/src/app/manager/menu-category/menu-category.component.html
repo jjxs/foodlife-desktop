@@ -1,0 +1,83 @@
+
+<div *ngIf="sort_model" class="disabled-mask">
+  ソート編集中、カテゴリー変更不可
+</div>
+<div class="content-container">
+  <div fxLayout="column" style="height: 100%;">
+    <div fxFlexAlign="start" style="position: relative; z-index: 1;">
+      <mat-tab-group class="demo-tab-group" (selectedTabChange)="onCategoryChange($event)">
+        <mat-tab *ngFor="let group of master_group" label="{{group.display_name}}">
+          <mat-tab-group class="demo-tab-group" [selectedIndex]="group.index" (selectedTabChange)="onMenuCategoryChange($event)">
+            <mat-tab *ngFor="let data of group.master_data; index as i" label="{{data.display_name}}">
+            </mat-tab>
+          </mat-tab-group>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <div fxFlexAlign="start">
+    </div>
+    <div fxLayout="row" style="padding:10px;height: calc(100vh - 230px); z-index:999; background:#fafafa;">
+
+      <div fxFlex="50%" class="box-border" style="height: 100%;">
+        <mat-list>
+          <mat-list-item class="example-item" style="margin:5px">
+            <button type="button" color="primary" mat-icon-button (click)="refresh()">
+              <mat-icon>refresh</mat-icon>
+            </button>
+            <span class="toolbar-spacer"></span>
+            <button *ngIf="sort_model" style="margin-right:10px" mat-raised-button color="primary" (click)="sortSave($event)">
+              確定
+            </button>
+            <button *ngIf="sort_model" mat-raised-button color="warn" (click)="sortCancel($event)">
+              取消
+            </button>
+            <button *ngIf="!sort_model" mat-raised-button color="primary" (click)="sortEdit($event)">
+              <mat-icon>sort_by_alpha</mat-icon>　ソート編集
+            </button>
+          </mat-list-item>
+
+          <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+            <ng-container *ngFor="let menu of menu_categorys;index as index">
+              <div class="example-item example-box" cdkDrag [cdkDragDisabled]="!sort_model">
+              
+                [{{menu.menu_no}}]{{menu.menu_name}}
+                <span class="toolbar-spacer"></span>
+                
+                <button *ngIf="!sort_model" mat-mini-fab color="accent" style="margin-left: 30px">
+                  <mat-icon class="example-icon" (click)="removeMenu($event, menu)">clear</mat-icon>
+                </button>
+              </div>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </div>
+
+        </mat-list>
+      </div>
+      
+      <div fxFlex="50%" *ngIf="!sort_model" class="box-border" style="height: 100%;">
+        <mat-list>
+          <mat-list-item class="example-item" style="margin:5px">
+            <span class="toolbar-spacer"></span>
+            <mat-slide-toggle [checked]="isUnSetOnly" (change)="onCheckAllChange($event)">
+              未分類のみ
+            </mat-slide-toggle>
+          </mat-list-item>
+          <div class="example-list">
+            <ng-container *ngFor="let menu of menus">
+              <mat-list-item class="example-item" style="margin:5px">
+              
+                [{{menu.no}}]{{menu.name}}
+                <span class="toolbar-spacer"></span>
+                <button mat-mini-fab color="primary" (click)="addMenu($event, menu)">
+                  <mat-icon class="example-icon">chevron_left</mat-icon>
+                </button>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </div>
+        </mat-list>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.menu-image {
+    width: 25%;
+    border-radius: 10px;
+    align-content: center;
+    margin: 10px;
+    text-align: center;
+    padding: 12px 0 12px 0;
+    display: flex;
+    float: left;
+    height: 200px;
+}
+
+.menu-image img {
+    height: calc(25vh - 50px);
+}
+
+.menu-add {
+    margin: 10px;
+}

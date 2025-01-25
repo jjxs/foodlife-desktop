@@ -1,0 +1,33 @@
+
+<div [formGroup]="form" fxLayout="column">
+    <div  fxLayout="row" fxLayoutAlign="start center">
+        <mat-form-field fxFlex>
+            <mat-label>点検日期</mat-label>
+            <input matInput
+                    [matDatepicker]="picker1"
+                    formControlName="inspection_date"
+                    required>
+            <mat-datepicker-toggle matSuffix
+                                    [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div  fxLayout="row" fxLayoutAlign="start center">
+        <mat-form-field fxFlex>
+            <mat-label>点検人</mat-label>
+            <input matInput
+                    formControlName="inspector"
+                    required>
+        </mat-form-field>
+    </div>
+    <div  fxLayout="row" fxLayoutAlign="start center">
+        <mat-form-field fxFlex>
+            <mat-label>備考</mat-label>
+            <textarea matInput formControlName="remarks"></textarea>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" style="width: 80%;margin-top: 2em;" fxLayoutAlign="end none">
+        <button mat-raised-button color="primary" (click)="onSave()">保存</button>
+        <button mat-raised-button color="warning" (click)="onCancel()" style="margin-left:20px;">取消</button>
+    </div>
+</div>

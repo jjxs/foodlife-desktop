@@ -1,0 +1,54 @@
+<div fxLayout="row" style="width:100%;height:40px;margin: .5em;">
+    <button mat-raised-button class="menu-add" fxFlex="5"
+      color="primary"
+      (click)="add()">添加</button>
+      <mat-form-field fxFlex=30 style="height:40px;" fxFlexOffset="5">
+        <mat-label>キーワード</mat-label>
+        <input matInput placeholder="言語を入力" [(ngModel)]="keyword" autocomplete="off">
+        <mat-icon class="search-icon" (click)="onSearch()" matSuffix>find_in_page</mat-icon>
+    </mat-form-field>
+</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- ja Column -->
+    <ng-container matColumnDef="ja">
+      <th mat-header-cell *matHeaderCellDef> 日本語 </th>
+      <td mat-cell *matCellDef="let element"> {{element.ja}} </td>
+    </ng-container>
+
+    <!-- zh Column -->
+    <ng-container matColumnDef="zh">
+      <th mat-header-cell *matHeaderCellDef> 中国語 </th>
+      <td mat-cell *matCellDef="let element"> {{element.zh}} </td>
+    </ng-container>
+
+    <!-- en Column -->
+    <ng-container matColumnDef="en">
+      <th mat-header-cell *matHeaderCellDef> 英語 </th>
+      <td mat-cell *matCellDef="let element"> {{element.en}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+
+    <ng-container matColumnDef="button">
+      <th mat-header-cell *matHeaderCellDef style="width: auto;"></th>
+      <td mat-cell *matCellDef="let row">
+          <button mat-icon-button matTooltip="編集" matTooltipPosition="before" (click)="edit(row)">
+              <mat-icon class="mat-icon-edit">
+                  edit_outline
+              </mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="削除" matTooltipPosition="after" (click)="onDelete(row)">
+              <mat-icon class="mat-icon-edit">
+                  delete
+              </mat-icon>
+          </button>
+      </td>
+  </ng-container>
+  </table>
+
+  <!-- <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator> -->
+</div>

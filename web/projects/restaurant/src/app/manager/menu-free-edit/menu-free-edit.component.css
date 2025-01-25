@@ -1,0 +1,7 @@
+.select {
+    height: 50px; 
+    width: 50%; 
+    margin-top: 20px; 
+    line-height: 50px;
+    border-style: groove;
+}

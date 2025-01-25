@@ -1,0 +1,26 @@
+<div [formGroup]="editForm" fxLayout="column" fxLayoutAlign="start center">
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="カテゴリー名" formControlName="display_name" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('display_name').valid || editForm.get('display_name').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="表示順" formControlName="display_order" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('display_order').valid || editForm.get('display_order').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;margin-top: 2em;" fxLayoutAlign="end none">
+        <button mat-raised-button color="primary" (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="onSave()">保存</button>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+.skydesk-table {
+    width: 100%;
+}
+
+.warehousing-detail>.mat-form-field {
+    padding: 0 10px;
+}
+
+.mat-form-field {
+    min-width: 0;
+}
+
+div {
+    min-width: 0;
+}
+
+.table-container {
+    height: calc(100% - 120px);
+}
+
+.warehouseing {
+    height: calc(100vh - 150px);
+    padding: 0 10px;
+}

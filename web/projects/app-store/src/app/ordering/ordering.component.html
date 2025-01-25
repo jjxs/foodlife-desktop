@@ -1,0 +1,112 @@
+<mat-sidenav-container fxLayout="column"
+                       fxLayoutAlign="space-between none"
+                       class="mat-sidenav-content">
+    <div [formGroup]="oderingForm">
+        <div fxLayout="row"
+             fxLayoutGap="40px"
+             style="padding: 20px;width:auto;">
+            <mat-form-field fxLayoutGap="40px">
+                <input matInput
+                       [matDatepicker]="picker1"
+                       placeholder="検索発注日期"
+                       formControlName="order_date">
+                <mat-datepicker-toggle matSuffix
+                                       [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <div fxLayout="column">
+                <mat-form-field style="width:200px;">
+                    <input matInput
+                           placeholder="発注番号"
+                           formControlName="order_number">
+                </mat-form-field>
+            </div>
+            <div fxLayout="column">
+                <button mat-raised-button
+                        color="primary"
+                        style="width: 20px"
+                        (click)="onSearch()">検索</button>
+            </div>
+            <div fxflex>
+                <button mat-raised-button
+                        color="primary"
+                        (click)="onClear()">クリア</button>
+            </div>
+        </div>
+    </div>
+    <div class="odering"
+         fxLayout="row"
+         fxLayoutAlign="space-between none"
+         fxLayoutGap="40px">
+        <div class="Ordering-list"
+             fxLayout="column"
+             fxFlex>
+            <mat-toolbar color="basic">
+                <span>発注履歴</span>
+                <span class="toolbar-spacer"></span>
+            </mat-toolbar>
+            <div class="table-container">
+                <table mat-table
+                       [dataSource]="dataSource"
+                       matSort
+                       class="mat-elevation-z8">
+                    <ng-container matColumnDef="order_date">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            mat-sort-header> 発注日期 </th>
+                        <td mat-cell
+                            *matCellDef="let element"> {{element.order_date}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="order_number">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            mat-sort-header> 発注番号 </th>
+                        <td mat-cell
+                            *matCellDef="let element"> {{element.order_number}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="orderer">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            mat-sort-header> 発注人 </th>
+                        <td mat-cell
+                            *matCellDef="let element"> {{element.orderer}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="order_address">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            mat-sort-header> 発注住所 </th>
+                        <td mat-cell
+                            *matCellDef="let element"> {{element.order_address}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="order_phone_number">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            mat-sort-header> 発注電話 </th>
+                        <td mat-cell
+                            *matCellDef="let element"> {{element.order_phone_number}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="order_summary">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            mat-sort-header> 発注摘要 </th>
+                        <td mat-cell
+                            *matCellDef="let element"> {{element.order_summary}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="remarks">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            mat-sort-header> 備考 </th>
+                        <td mat-cell
+                            *matCellDef="let element"> {{element.remarks}} </td>
+                    </ng-container>
+                    <tr mat-header-row
+                        *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row
+                        *matRowDef="let row; columns: displayedColumns;"
+                        (click)="onAddnew(row.id)"></tr>
+                </table>
+                <app-table-empty-message [dataSource]="dataSource"></app-table-empty-message>
+            </div>
+        </div>
+    </div>
+</mat-sidenav-container>

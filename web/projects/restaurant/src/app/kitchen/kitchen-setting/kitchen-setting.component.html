@@ -1,0 +1,18 @@
+<mat-grid-list cols="4" rowHeight="fit" gutterSize="5" theme style="height:50vh">
+  <ng-container *ngFor="let master of masters">
+    <mat-grid-tile [colspan]="1" [rowspan]="1" [ngClass]="master.checked ? 'bgcolor-accent' : 'bgcolor-primary'" (click)="onClick($event, master)">
+      <div style="padding:10px;">
+        <mat-checkbox [(ngModel)]="master.checked" (click)="$event.stopPropagation();"></mat-checkbox>
+      </div>
+      <div style="padding:5px;">{{ master.display_name }}</div>
+    </mat-grid-tile>
+  </ng-container>
+</mat-grid-list>
+
+<div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;padding-top:20px">
+  <button mat-raised-button color="accent" (click)="clear()">クリア</button>
+  <div>
+    <button mat-raised-button color="primary" (click)="ok()" cdkFocusInitial>OK</button>
+    <button mat-raised-button color="primary" (click)="ng()" style="margin-left:20px">キャンセル</button>
+  </div>
+</div>

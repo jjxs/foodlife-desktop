@@ -1,0 +1,85 @@
+<div [formGroup]="dataForm" fxLayout="column" fxLayoutAlign="start center">
+  <div fxLayout="row" style="width: 70%; margin-top: 1rem">
+    <mat-form-field fxFlex="100">
+      <input
+        matInput
+        placeholder="カテゴリー名"
+        formControlName="display_name"
+        required
+      />
+    </mat-form-field>
+  </div>
+  <span
+    [hidden]="
+      dataForm.get('display_name').valid ||
+      dataForm.get('display_name').untouched
+    "
+  >
+    <div class="callout">必須項目です</div>
+  </span>
+  <div fxLayout="row" style="width: 70%">
+    <mat-form-field fxFlex="100">
+      <input
+        matInput
+        placeholder="表示順"
+        formControlName="display_order"
+        required
+      />
+    </mat-form-field>
+  </div>
+  <span
+    [hidden]="
+      dataForm.get('display_order').valid ||
+      dataForm.get('display_order').untouched
+    "
+  >
+    <div class="callout">必須項目です</div>
+  </span>
+
+  <div fxLayout="row" style="width: 70%; align-items: center" *ngIf="can_qr">
+    <mat-form-field fxFlex="40">
+      <mat-select placeholder="可见開始時間" formControlName="show_start_time">
+        <mat-option *ngFor="let item of time_list" [value]="item.id">
+          {{ item.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span style="margin-left: 35px" fxFlex="20">から</span>
+    <mat-form-field fxFlex="40">
+      <mat-select placeholder="可见終了時間" formControlName="show_end_time">
+        <mat-option *ngFor="let item of time_list" [value]="item.id">
+          {{ item.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <span [hidden]="true" id="address">
+    <div
+      style="
+        font-size: 90%;
+        line-height: 1.5;
+        padding: 0.3em;
+        border-radius: 0.2em;
+        border: 1px solid #8b242e;
+        margin-top: -44px;
+        background: #ffd6d9;
+        left: 274px;
+        color: #757575;
+        margin-top: 1px;
+      "
+      id="address1"
+    >
+      必須項目です
+    </div>
+  </span>
+  <div fxLayout="row" style="width: 70%; margin-top: 2em">
+    <!--
+        <mat-checkbox formControlName="option_display">使用</mat-checkbox>
+        -->
+    <span class="toolbar-spacer"></span>
+    <button mat-raised-button color="primary" (click)="onCancel()">取消</button
+    >&nbsp;&nbsp;&nbsp;&nbsp;
+    <button mat-raised-button color="primary" (click)="onSave()">保存</button>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="chart-list">
+  <h3>棚卸統計表</h3>
+  <mat-form-field class="example-full-width"  style="width:120px;">
+    <input matInput [matDatepicker]="dp" placeholder="開始時間" [formControl]="date1" style="text-align: center;">
+    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+    <mat-datepicker #dp
+                    startView="multi-year"
+                    (yearSelected)="chosenYearHandler($event, date1)"
+                    (monthSelected)="chosenMonthHandler($event, date1, dp, 1)"
+                    panelClass="example-month-picker">
+    </mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" style="width:120px; margin-left: 20px;">
+    <input matInput [matDatepicker]="dp2" placeholder="終了時間" [formControl]="date2" style="text-align: center;">
+    <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+    <mat-datepicker #dp2
+                    startView="multi-year"
+                    (yearSelected)="chosenYearHandler($event, date2)"
+                    (monthSelected)="chosenMonthHandler($event, date2, dp2, 2)"
+                    panelClass="example-month-picker">
+    </mat-datepicker>
+  </mat-form-field>
+
+  <!--
+  <button mat-raised-button color="primary" (click)="getData()" style="margin-left:10px;">
+    検索
+  </button>
+  -->
+  <div echarts [options]="chartOption" style="text-align:left;"></div>
+
+</div>

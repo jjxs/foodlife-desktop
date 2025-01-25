@@ -1,0 +1,31 @@
+<mat-sidenav-container class="mat-sidenav-content">
+    <div fxLayout="row" style="height: 100%;" fxLayoutAlign="center none">
+        <div class="list" fxLayout="column" fxFlex=100>
+            <div [ngClass]="{'hide-div': editFlg || catFlg}">
+                <mat-toolbar color="basic">
+                    <mat-button-toggle-group style="padding: 0 0 !important;" [(ngModel)]="listSwitch" #toggle>
+                        <mat-button-toggle value="I">材料一覧</mat-button-toggle>
+                        <mat-button-toggle value="C">材料カテゴリー一覧</mat-button-toggle>
+                    </mat-button-toggle-group>
+                    <span class="toolbar-spacer"></span>
+                    <button mat-raised-button class="padding: 5px 15px;font-size: 20px;" *ngIf="listSwitch === 'I'"
+                        color="primary" (click)="onEditIng(true)">材料追加</button>
+                    <button mat-raised-button color="primary" *ngIf="listSwitch === 'C'"
+                        (click)="onEditCat(true)">カテゴリー追加</button>
+                </mat-toolbar>
+                <app-ingredients-list *ngIf="listSwitch === 'I'" (edit)="onEditIng($event)" #ingList>
+                </app-ingredients-list>
+                <app-ingredients-cat *ngIf="listSwitch === 'C'" (edit)="onEditCat($event)" #catList>
+                </app-ingredients-cat>
+            </div>
+            <!-- <app-ingredients-edit [ngClass]="{'hide-div': !editFlg}"
+                                  [data]="ingData"
+                                  (saved)="onRefresh('ing')"
+                                  (edit)="onEditIng($event)"></app-ingredients-edit> -->
+            <!-- <app-cat-reg [ngClass]="{'hide-div': !catFlg}"
+                         [data]="catData"
+                         (saved)="onRefresh('cat')"
+                         (edit)="onEditCat($event)"></app-cat-reg> -->
+        </div>
+    </div>
+</mat-sidenav-container>

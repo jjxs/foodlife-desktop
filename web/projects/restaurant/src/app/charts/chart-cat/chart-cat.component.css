@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+}
+
+.mat-checkbox-label {
+    width: 70px !important;
+}
+
+.mat-tab-body-wrapper {
+    overflow-y: unset !important;
+}
+
+body {
+    font-family: Roboto, Arial, sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: unset;
+}
+
+.mat-drawer-container {
+    overflow-y: unset !important;
+}
+
+td.mat-cell {
+    font-size: 12px;
+    text-align: left;
+}

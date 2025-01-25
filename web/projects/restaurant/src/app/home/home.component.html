@@ -1,0 +1,158 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" [fixedInViewport]="true" mode="side" opened="true" [position]="'start'">
+    <mat-toolbar color="primary">
+      <ng-container i18n="@@top">トップ</ng-container>
+    </mat-toolbar>
+    <mat-nav-list>
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/manager')" mat-list-item routerLink="/manager"
+        class="ami-list-item">
+        <!--<mat-icon>tv</mat-icon>-->
+        <span>管理画面</span>
+      </a>
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/menu-mgmt')" mat-list-item routerLink="/store/menu-mgmt"
+        class="ami-list-item">
+        <!--<mat-icon>build</mat-icon>-->
+        <span>メユー管理</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/menu-gift')" mat-list-item routerLink="/store/menu-gift"
+        class="ami-list-item">
+        <!--<mat-icon>build</mat-icon>-->
+        <span>贈品メニュー管理</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/counter-manager') && app.showMenu('counter')" mat-list-item routerLink="/store/counter-manager"
+        class="ami-list-item">
+        <!--<mat-icon>payment</mat-icon>-->
+        <span>会計管理</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/payment')" mat-list-item routerLink="/store/payment"
+        class="ami-list-item">
+        <!--<mat-icon>payment</mat-icon>-->
+        <span>支払方法</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/seat-manager')" mat-list-item routerLink="/seat-manager"
+        class="ami-list-item">
+        <!--<mat-icon>event_seat</mat-icon>-->
+        <span>坐席管理</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/shop-cost')" mat-list-item routerLink="/store/shop-cost"
+        class="ami-list-item">
+        <!--<mat-icon>attach_money</mat-icon>-->
+        <span>費用管理</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/ingredients')" mat-list-item
+        routerLink="/store/ingredients" class="ami-list-item">
+        <!--<mat-icon>local_gas_station</mat-icon>-->
+        <span>材料管理</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/inventory-control')" mat-list-item
+        routerLink="/store/inventory-control" class="ami-list-item">
+        <span>在庫一覧</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/inventory-profit')" mat-list-item
+        routerLink="/store/inventory-profit" class="ami-list-item">
+        <span>棚卸管理</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/user-manager')" mat-list-item
+        routerLink="/store/user-manager" class="ami-list-item">
+        <!--<mat-icon>account_box</mat-icon>-->
+        <span>ユーザー管理</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/user')" mat-list-item
+        routerLink="/store/user" class="ami-list-item">
+        <span>会員管理</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/user-group')" mat-list-item
+        routerLink="/store/user-group" class="ami-list-item">
+        <!--<mat-icon>group</mat-icon>-->
+        <span>グループ管理</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/store/setsubi-manager')" mat-list-item
+        routerLink="/store/setsubi-manager" class="ami-list-item">
+        <!--<mat-icon>tablet</mat-icon>-->
+        <span>設備管理</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/charts')" mat-list-item routerLink="/charts"
+        class="ami-list-item">
+        <!--<mat-icon>trending_up</mat-icon>-->
+        <span>経営分析</span>
+      </a>
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/company-manager') && app.canTakeoutPrinter()" mat-list-item routerLink="/company-manager"
+        class="ami-list-item">
+        <mat-icon>event_seat</mat-icon>
+        <span>外卖用户</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('takeout-order') && app.canTakeoutPrinter()" mat-list-item
+        routerLink="takeout-order" class="ami-list-item">
+        <mat-icon>local_gas_station</mat-icon>
+        <span>外卖订单</span>
+      </a>
+      
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('qrcode-setting') && app.canTakeoutPrinter()" mat-list-item
+        routerLink="qrcode-setting" class="ami-list-item">
+        <mat-icon>local_gas_station</mat-icon>
+        <span>二维码点餐</span>
+      </a>
+
+      <a *ngIf="authSrv.Authenticated && authSrv.isShow('/settings')" mat-list-item routerLink="/settings"
+        class="ami-list-item">
+        <!--<mat-icon>settings</mat-icon>-->
+        <span i18n="@@menu-settings">設定</span>
+      </a>
+
+    </mat-nav-list>
+
+
+    <div class="footer-panel">
+      <div style="margin-top:5px">
+        <ami-theme-select class="ami-theme-select"></ami-theme-select>
+      </div>
+    </div>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-container *ngIf="headStyle ">
+      <mat-toolbar color="primary" style="padding-top: 3px; font-size:18px;" *ngIf="authSrv.showMenu == true">
+        <button *ngIf="showMenuStyle" type="button" aria-label="Toggle sidenav" mat-icon-button
+          (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <!-- <img style="width:auto;height:56px" src="/assets/images/title.png" alt="Norway"> -->
+        <!-- <span (click)="drawer.toggle()">{{app.SystemName}}</span> -->
+        <span style="padding-left:10px;">{{toolbardisplay}}</span>
+        <span class="toolbar-spacer"></span>
+        <span style="padding-right:20px;">
+          {{authSrv.nickname}}（{{authSrv.role_name}}）
+        </span>
+        <!-- <button mat-mini-fab color="base" (click)="reload()" style="margin-left:20px;margin-right:20px;">
+        <mat-icon class="example-icon">refresh</mat-icon>
+      </button> -->
+        <button *ngIf="authSrv.Authenticated===false" mat-mini-fab (click)="login()">
+          <mat-icon class="example-icon">account_circle</mat-icon>
+        </button>
+        <!-- <button  *ngIf="authSrv.IsDebug===true" mat-mini-fab (click)="fullScreen()" color="primary">
+            <mat-icon class="example-icon">launch</mat-icon>
+          </button> -->
+        <button *ngIf="authSrv.Authenticated===true" mat-mini-fab (click)="logout()">
+          <mat-icon class="example-icon">exit_to_app</mat-icon>
+        </button>
+      </mat-toolbar>
+    </ng-container>
+    <router-outlet></router-outlet>
+
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

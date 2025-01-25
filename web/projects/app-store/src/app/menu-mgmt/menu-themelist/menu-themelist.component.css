@@ -1,0 +1,6 @@
+.theme-list {
+    width: calc(33vw - 10px);
+    height: 28vw;
+    float: left;
+    text-align: center;
+}

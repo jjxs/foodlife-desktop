@@ -1,0 +1,67 @@
+<div [formGroup]="editForm" fxLayout="column" fxLayoutAlign="start center">
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="ユーザー名" autocomplete="off" formControlName="account" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('account').valid || editForm.get('account').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100 id="passpass">
+            <input type="password" autocomplete="off" matInput placeholder="パスワード" formControlName="password" id="pass">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" style="width: 80%;" id="pass1pass1">
+        <mat-form-field fxFlex=100>
+            <input type="password" autocomplete="off"  matInput placeholder="確認パスワード" formControlName="password1" id="pass1">
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('password1').valid || editForm.get('password1').untouched" id="pass_show">
+        <div class="callout" id="pass_show1">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <mat-label>会員レベル</mat-label>
+            <mat-select formControlName="level" id="level">
+                     <mat-option *ngFor="let item of level_list"
+                                [value]="item.id">
+                        {{item.name}}
+                    </mat-option>
+              </mat-select>
+              
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="姓名" formControlName="user_name">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <mat-label>性別</mat-label>
+            <mat-select formControlName="sex" id="sex">
+                     <mat-option [value]=0>男</mat-option>
+                     <mat-option [value]=1>女</mat-option>
+              </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="連絡先" formControlName="phone_number">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="備考" formControlName="remarks">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" style="width: 80%;margin-top: 2em;" fxLayoutAlign="end none">
+        <button mat-raised-button color="primary" (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="onSave()">保存</button>
+    </div>
+</div>

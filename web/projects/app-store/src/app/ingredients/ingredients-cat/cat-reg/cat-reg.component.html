@@ -1,0 +1,43 @@
+<div [formGroup]="dataForm" fxLayout="column" fxLayoutAlign="start center">
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="カテゴリー名" formControlName="cat_name" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="dataForm.get('cat_name').valid || dataForm.get('cat_name').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" *ngIf="hasParent" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <mat-select placeholder="親" formControlName="parent_id">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let item of parents" [value]="item.id">
+                    {{item.cat_name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <textarea matInput style="height:80px;" placeholder="説明" formControlName="explanation">
+                        </textarea>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" style="width: 80%;margin-top: 2em;" fxLayoutAlign="end none">
+        <button mat-raised-button color="primary" (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="onSave()">保存</button>
+    </div>
+</div>
+<!-- <div fxLayout="column"
+     style="height: 100%;"
+     fxLayoutAlign="space-between none">
+    <mat-toolbar class="window-footer">
+        <span class="toolbar-spacer"></span>
+        <button mat-raised-button
+                color="primary"
+                (click)="onSave()"
+                i18n="@@m01p02-save">保存</button>
+    </mat-toolbar>
+</div> -->

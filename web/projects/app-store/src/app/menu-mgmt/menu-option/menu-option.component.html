@@ -1,0 +1,116 @@
+<div class="componect-container">
+    <div class="search">
+        <div 
+            fxLayout="row"
+            fxLayoutAlign="start center">
+            <div fxFlex=50
+                style="padding-left: 15px;">
+                <button mat-icon-button
+                        matTooltip="更新"
+                        matTooltipPosition="below"
+                        (click)="onSearch()">
+                    <mat-icon class="mat-icon-edit">
+                        refresh
+                    </mat-icon>
+                </button>
+            </div>
+            <div fxLayout="row"
+                fxLayoutGap="5px">
+            </div>
+        </div>
+    </div>
+    <div class="table-container"
+         fxLayout="column"
+         [formGroup]="tableForm"
+         fxLayoutAlign="start center">
+        <table class="app-grid" style="width:100%">
+            <tr>
+                <th style="width:45%">
+                    カテゴリー名
+                </th>
+                <th style="width:40%">
+                    表示順
+                </th>
+                <th></th>
+            </tr>
+            <ng-container *ngFor="let parent of dataSource.data; let i = index"
+                          formArrayName="parentCat">
+                <tr style="background-color:#b0b0b0">
+                    <td [formGroupName]="i">
+                        <span style="font-size: 14px;">{{parent.display_name}}</span>
+                    </td>
+                    <td [formGroupName]="i">
+                        <span style="font-size: 14px;">{{parent.display_order}}</span>
+                    </td>
+                    <td>
+                        <button mat-icon-button
+                                matTooltip="編集"
+                                matTooltipPosition="before"
+                                (click)="onEdit(parent,'parent')">
+                            <mat-icon class="mat-icon-edit">
+                                edit_outline
+                            </mat-icon>
+                        </button>
+                        <button mat-icon-button
+                                (click)="onToggle(parent, i)">
+                            <mat-icon *ngIf="parent.display === 'none'"
+                                      matTooltip="展開"
+                                      matTooltipPosition="after">
+                                view_list
+                            </mat-icon>
+                            <mat-icon *ngIf="parent.display !== 'none'"
+                                      matTooltip="折り畳み"
+                                      matTooltipPosition="after">
+                                view_column
+                            </mat-icon>
+                        </button>
+                        
+                        <button mat-icon-button
+                                matTooltip="削除" *ngIf="parent.children.length==0"
+                                matTooltipPosition="after"
+                                (click)="onDelete(parent)">
+                            <mat-icon class="mat-icon-edit">
+                                delete
+                            </mat-icon>
+                        </button>
+                    </td>
+                </tr>
+                <ng-container [formGroupName]="i">
+                    <tr *ngFor="let child of parent.children; let j = index"
+                        formArrayName="children"
+                        [style.display]="parent.display">
+                        <td [formGroupName]="j">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span style="font-size: 14px;">{{child.display_name}}</span>
+                        </td>
+                        <td [formGroupName]="j">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span style="font-size: 14px;">{{child.display_order}}</span>
+                        </td>
+                        <td>
+                            <button mat-icon-button
+                                    matTooltip="編集"
+                                    matTooltipPosition="before"
+                                    (click)="onEdit(child,'child')">
+                                <mat-icon class="mat-icon-edit">
+                                    edit_outline
+                                </mat-icon>
+                            </button>
+                            
+                            <button mat-icon-button
+                                    matTooltip="削除"
+                                    matTooltipPosition="after"
+                                    (click)="onDelete(child)">
+                                <mat-icon class="mat-icon-edit">
+                                    delete
+                                </mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+        </table>
+        <app-table-empty-message [dataSource]="dataSource"
+                                 #catempty></app-table-empty-message>
+    </div>
+</div>

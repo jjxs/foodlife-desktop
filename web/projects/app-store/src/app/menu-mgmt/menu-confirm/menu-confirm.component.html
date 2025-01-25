@@ -1,0 +1,118 @@
+<mat-sidenav-container class="mat-sidenav-content">
+    <div fxLayout="row" style="height: 100%;" fxLayoutAlign="center none">
+        <div class="list" fxLayout="column" fxFlex=100>
+            <div>
+                <mat-toolbar color="basic">
+                    <div>メニュー確認</div>
+                    <span class="toolbar-spacer"></span>
+                </mat-toolbar>
+                <div class="componect-container">
+                    <div class="table-container" fxLayout="column" fxLayoutAlign="start center">
+                        <table class="app-grid" style="width: 100%">
+                            <tr>
+                                <th style="font-weight: bold;width: 1%;">
+                                    编号
+                                </th>
+                                <th style="font-weight: bold;width: 4%;">
+                                    菜单分类(大)
+                                </th>
+                                <th style="font-weight: bold;width: 4%;">
+                                    菜单分类(小)
+                                </th>
+                                <th style="font-weight: bold;width: 8%;">
+                                    日文名称
+                                </th>
+                                <th style="font-weight: bold;width: 8%;">
+                                    中文名称
+                                </th>
+                                <th style="font-weight: bold;width: 6%;">
+                                    英文名称
+                                </th>
+                                <th style="font-weight: bold;width: 3%;">
+                                    是否含税
+                                </th>
+                                <th style="font-weight: bold;width: 3%;">
+                                    税前价格
+                                </th>
+                                <th style="font-weight: bold;width: 3%;">
+                                    税后价格
+                                </th>
+                                <th style="font-weight: bold;width: 2%;">
+                                    照片文件
+                                </th>
+                                <th style="width: 11%;"></th>
+                            </tr>
+                            <ng-container *ngFor="let menu of dataSource.data">
+                                <tr>
+                                    <td>
+                                        <span class="errorth" *ngIf="menu.error_no == '1'">{{menu.no}}</span>
+                                        <p style="margin: 0 !important;" *ngIf="menu.error_no == '0'">{{menu.no}}</p>
+                                    </td>
+                                    <td>
+                                        {{menu.menu_max}}
+                                    </td>
+                                    <td>
+                                        {{menu.menu_min}}
+                                    </td>
+                                    <td>
+                                        <span class="errorth" *ngIf="menu.error_name == '1'">{{menu.ja_name}}</span>
+                                        <p style="margin: 0 !important;" *ngIf="menu.error_name == '0'">{{menu.ja_name}}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        {{menu.ch_name}}
+                                    </td>
+                                    <td>
+                                        {{menu.en_name}}
+                                    </td>
+                                    <td>
+                                        {{menu.fax}}
+                                    </td>
+                                    <td>
+                                        {{menu.before_price}}
+                                    </td>
+                                    <td>
+                                        {{menu.after_price}}
+                                    </td>
+                                    <td>
+                                        {{menu.photo}}
+                                    </td>
+                                    <td>
+                                        <span class="errorspan" *ngIf="menu.error_no == '1';else other">编号已存在<br /></span>
+                                        <ng-template #other><span></span></ng-template>
+                                        <span class="errorspan" *ngIf="menu.error_name == '1';else othername">名称已存在<br /></span>
+                                        <ng-template #othername><span></span></ng-template>
+                                        <span class="errorspan" *ngIf="menu.none_no == '1';else othernone_no">编号不能为空<br /></span>
+                                        <ng-template #othernone_no><span></span></ng-template>
+                                        <span class="errorspan" *ngIf="menu.none_max == '1';else othernone_max">大分类不能为空<br /></span>
+                                        <ng-template #othernone_max><span></span></ng-template>
+                                        <span class="errorspan" *ngIf="menu.none_min == '1';else othernone_min">小分类不能为空<br /></span>
+                                        <ng-template #othernone_min><span></span></ng-template>
+                                        <span class="errorspan" *ngIf="menu.none_ja_name == '1';else othernone_ja_name">名称不能为空<br /></span>
+                                        <ng-template #othernone_ja_name><span></span></ng-template>
+                                        <span class="errorspan" *ngIf="menu.none_ch_name == '1';else othernone_ch_name">中文名不能为空<br /></span>
+                                        <ng-template #othernone_ch_name><span></span></ng-template>
+                                        <span class="errorspan" *ngIf="menu.none_en_name == '1';else othernone_en_name">英语名不能为空<br /></span>
+                                        <ng-template #othernone_en_name><span></span></ng-template>
+                                        <span class="errorspan" *ngIf="menu.none_fax == '1';else othernone_fax">是否含税不能为空<br /></span>
+                                        <ng-template #othernone_fax><span></span></ng-template>
+                                        <span class="errorspan" *ngIf="menu.none_before == '1';else othernone_before">税前价格不能为空<br /></span>
+                                        <ng-template #othernone_before><span></span></ng-template>
+                                        <span class="errorspan" *ngIf="menu.none_after == '1';else othernone_after">税后价格不能为空<br /></span>
+                                        <ng-template #othernone_after><span></span></ng-template>
+                                        <span class="errorspan" *ngIf="menu.none_photo == '1';else othernone_photo">照片不能为空<br /></span>
+                                        <ng-template #othernone_photo><span></span></ng-template>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+                <div fxLayout="row" class="newbutton">
+                    <button mat-raised-button color="primary" (click)="no($event)">取消</button>&nbsp;&nbsp;
+                    <button mat-raised-button color="primary" (click)="ok($event)">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-sidenav-container>

@@ -1,0 +1,238 @@
+<div fxLayout="column"
+                       fxLayoutAlign="space-between none"
+                       class="mat-sidenav-content">
+    <div [formGroup]="searchForm">
+        <div fxLayout="row"
+             fxLayoutGap="40px"
+             style="padding: 20px;"
+             [formGroup]="searchForm">
+            <div fxLayout="column">
+                <mat-form-field style="width:200px;">
+                    <input matInput
+                           placeholder="部品種類"
+                           formControlName="parts_type">
+                </mat-form-field>
+            </div>
+            <div fxLayout="column">
+                <mat-form-field style="width:200px;">
+                    <input matInput
+                           placeholder="材料名"
+                           formControlName="part_name">
+                </mat-form-field>
+            </div>
+            <div fxLayout="column">
+                <button mat-raised-button
+                        color="primary"
+                        style="width: 20px"
+                        (click)="onSearch()">検索</button>
+            </div>
+            <div fxflex>
+                <button mat-raised-button
+                        color="primary"
+                        (click)="onClear()">クリア</button>
+            </div>
+            <div>
+                <button mat-raised-button
+                        color="primary"
+                        (click)="onEdit()">点検</button>
+            </div>
+            <div>
+                <button mat-raised-button
+                        color="primary"
+                        (click)="onResult()">点検結果確認</button>
+            </div>
+        </div>
+    </div>
+    <div class="inventoryControl"
+         fxLayout="row"
+         fxLayoutAlign="space-between none"
+         fxLayoutGap="10px">
+        <div class="inventoryControl-list"
+             fxFlex>
+            <mat-toolbar color="basic">
+                <span>在庫一覧</span>
+            </mat-toolbar>
+            <div class="table-container">
+                <table mat-table
+                       [dataSource]="dataSource"
+                       class="skydesk-table"
+                       matSort>
+                    <ng-container matColumnDef="parts_type">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">部品種類</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.parts_type}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="part_name">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">材料名</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.part_name}}</td>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="base">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">拠点</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.base}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="parts_theory_inventory_qty">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">部品理論在庫数量</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.parts_theory_inventory_qty}}</td>
+                    </ng-container> -->
+                    <ng-container matColumnDef="parts_inventory_qty">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">部品実際在庫数量</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.parts_inventory_qty}}</td>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="parts_processing_category">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">部品処理区分</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.parts_processing_category}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="part_processing_category_id">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">部品処理区分ＩＤ</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.part_processing_category_id}}</td>
+                    </ng-container> -->
+                    <ng-container matColumnDef="remarks">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">備考</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.remarks}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="button">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:80px;"></th>
+                        <td mat-cell
+                            *matCellDef="let row">
+                            <button mat-raised-button
+                                    color="primary"
+                                    (click)="onEdit()">編集</button>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row
+                        *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row
+                        *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <app-table-empty-message [dataSource]="dataSource"></app-table-empty-message>
+            </div>
+        </div>
+        <div class="check-detail"
+             [formGroup]="checkForm"
+             fxLayoutAlign="none none"
+             *ngIf="checkflg"
+             fxLayout="column"
+             fxFlex>
+            <mat-toolbar color="basic">
+                <span>点検明細</span>
+                <span class="toolbar-spacer"></span>
+                <div fxflex>
+                    <button mat-raised-button
+                            color="primary"
+                            (click)="onSave()">保存</button>
+                </div>
+                <div fxflex>
+                    <button mat-raised-button
+                            color="primary"
+                            (click)="onDelete()">削除</button>
+                </div>
+                <div>
+                    <button mat-raised-button
+                            color="primary"
+                            (click)="offEdit()">閉じる</button>
+                </div>
+            </mat-toolbar>
+            <div fxLayout="row"
+                 fxLayoutGap="20px"
+                 fxLayoutAlign="space-between none"
+                 style="padding: 15px;">
+                <mat-form-field fxFlex>
+                    <mat-select placeholder="部品種類"
+                                formControlName="parts_type"
+                                (selectionChange)="onSelectPart($event)">
+                        <mat-option *ngFor="let cat of categories" [value]="cat.id">
+                            <span *ngFor="let level of cat.levels;">&nbsp;&nbsp;&nbsp;&nbsp;</span>{{cat.cat_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <mat-select formControlName="part_id"
+                                placeholder='材料名'>
+                        <mat-option *ngFor="let part of partNames"
+                                    [value]="part.id">
+                            {{part.ing_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row"
+                 fxLayoutGap="20px"
+                 fxLayoutAlign="space-between none"
+                 style="padding: 10px;">
+                <mat-form-field fxFlex>
+                    <input matInput
+                           placeholder="部品単位"
+                           formControlName="part_unit">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <input matInput
+                           placeholder="部品実際在庫数量"
+                           formControlName="parts_inventory_qty"
+                           required>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row"
+                 fxLayoutGap="20px"
+                 fxLayoutAlign="space-between none"
+                 style="padding: 10px;">
+                <mat-form-field fxFlex>
+                    <input matInput
+                           [matDatepicker]="picker1"
+                           placeholder="点検日期"
+                           formControlName="inspection_date"
+                           required>
+                    <mat-datepicker-toggle matSuffix
+                                           [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <input matInput
+                           placeholder="点検人"
+                           formControlName="inspector"
+                           required>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row"
+                 fxLayoutGap="20px"
+                 fxLayoutAlign="space-between none"
+                 style="padding: 10px;">
+                <mat-form-field fxFlex>
+                    <input matInput
+                           placeholder="点検結果確認"
+                           formControlName="inspection_result_confirmation"
+                           required>
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <input matInput
+                           placeholder="備考"
+                           formControlName="remarks">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>

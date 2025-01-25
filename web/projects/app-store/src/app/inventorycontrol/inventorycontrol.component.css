@@ -1,0 +1,13 @@
+.skydesk-table {
+    padding: 0 10px;
+    width: 100%;
+}
+
+.table-container {
+    height: calc(100% - 120px);
+}
+
+.inventoryControl {
+    height: calc(100vh - 200px);
+    padding: 0 10px;
+}

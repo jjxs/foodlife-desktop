@@ -1,0 +1,43 @@
+<div [formGroup]="dataForm"
+     fxLayout="column"
+     fxLayoutAlign="start center">
+    <div style="margin-left: 5px;font-size: 1.5rem !important;">支払い先ー編集</div>
+    <div fxLayout="row"
+         style="width: 80%;margin-top:40px;">
+        <mat-form-field fxFlex=100>
+            <input matInput autocomplete="off" 
+                   placeholder="支払い先"
+                   required
+                   formControlName="sup_name">
+        </mat-form-field>
+        <app-errors [formGroup]="dataForm"></app-errors>
+    </div>
+    <div fxLayout="row"
+         *ngIf="hasParent"
+         style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <input matInput autocomplete="off" 
+                   placeholder="連絡先"
+                   formControlName="sup_tel">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row"
+         *ngIf="hasParent"
+         style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <input matInput autocomplete="off" 
+                   placeholder="アドレス"
+                   formControlName="sup_addr">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row"
+         style="width: 80%;"
+         fxLayoutAlign="end none">
+        <button mat-raised-button
+                color="primary"
+                (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button
+                color="primary"
+                (click)="onSave()">保存</button>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div [formGroup]="editForm" fxLayout="column" fxLayoutAlign="start center">
+    <div fxLayout="row" style="width: 50%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="カテゴリー名" formControlName="display_name" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('display_name').valid || editForm.get('display_name').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 50%;">
+        <mat-form-field fxFlex=100>
+            <mat-select placeholder="theme"
+                        (selectionChange)="selectTheme($event)"
+                        formControlName="theme_id">
+                <mat-option *ngFor="let item of theme_list"
+                            [value]="item.id">
+                    {{item.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!--
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="theme_id" formControlName="theme_id" required>
+        </mat-form-field>
+        -->
+    </div>
+    <span [hidden]="editForm.get('theme_id').valid || editForm.get('theme_id').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <!--
+    <div fxLayout="row" style="width: 50%;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="表示条数" formControlName="menu_count" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('menu_count').valid || editForm.get('menu_count').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    -->
+    <div fxLayout="row" style="width: 50%;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="表示順" formControlName="display_order" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('display_order').valid || editForm.get('display_order').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayoutAlign="start left">
+        <div fxLayout="column"  *ngFor="let img of photo; index as i"
+                fxLayoutAlign="start center"
+                fxFlex>
+            <span style="width: 180px;height: 120px;">
+                <img src="assets/img/no_image.jpg"
+                        style="width:180px;height: 120px;"
+                        *ngIf="!img">
+                <img [src]="img"
+                        style="width:180px;height: 120px;"
+                        *ngIf="img">
+            </span>
+            <div>
+                <button mat-button
+                        style="width: 100px;"
+                        [matMenuTriggerFor]="menu">
+                    写真編集
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item
+                            (click)="onSelectPhoto(i)">写真選択</button>
+                    <button mat-menu-item
+                            (click)="onDeletePhoto(i)">写真削除</button>
+                </mat-menu>
+            </div>
+        </div>
+        <input type="file"
+                style="display: none"
+                accept=".png,.jpg,.jpeg"
+                (change)="onChangeFileInput()"
+                #fileInput>
+    </div>
+    <div fxLayout="row" style="width: 50%;margin-top: 2em;" fxLayoutAlign="end none">
+        <button mat-raised-button color="primary" (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="onSave()">保存</button>
+    </div>
+</div>

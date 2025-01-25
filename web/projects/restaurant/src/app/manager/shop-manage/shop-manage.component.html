@@ -1,0 +1,112 @@
+
+<div fxLayout="row" style="width:100%;border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:15%;text-align: right;">
+    店铺名称
+  </div>
+  <div fxLayout="column" style="width:85%">
+    <mat-form-field style="width: 60%;">
+      <input matInput  [(ngModel)] = "config['name']">
+    </mat-form-field>
+  </div>
+</div>
+<div fxLayout="row" style="width:100%;border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:15%;text-align: right;">
+    登録番号
+  </div>
+  <div fxLayout="column" style="width:85%">
+    <mat-form-field style="width: 60%;">
+      <input matInput  [(ngModel)] = "config['no']">
+    </mat-form-field>
+  </div>
+</div>
+<div fxLayout="row" style="width:100%;border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:15%;text-align: right;">
+    打印机
+  </div>
+  <div fxLayout="column" style="width:85%">
+    <mat-select style="width:30%;height: 60px;line-height: 60px;"
+                placeholder="打印机"
+                [(value)]="config['charset']">
+      <mat-option *ngFor="let data of charsets"
+                  [value]="data.key">
+        {{data.value}}
+      </mat-option>
+    </mat-select>
+  </div>
+</div>
+
+<div fxLayout="row" style="width:100%;border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:15%;text-align: right;">
+    电话
+  </div>
+  <div fxLayout="column" style="width:35%">
+    <mat-form-field style="width: 90%;">
+      <input matInput  [(ngModel)] = "config['tel']">
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" class="title" style="width:11%;text-align: right;">
+    邮编
+  </div>
+  <div fxLayout="column" style="width:35%">
+    <mat-form-field style="width: 90%;">
+      <input matInput  [(ngModel)] = "config['post']">
+    </mat-form-field>
+  </div>
+</div>
+<div fxLayout="row" style="width:100%;border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:15%;text-align: right;">
+    住址
+  </div>
+  <div fxLayout="column" style="width:35%">
+    <mat-form-field style="width: 90%;">
+      <input matInput  [(ngModel)] = "config['addr1']">
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" class="title" style="width:11%;text-align: right;">
+    门牌号
+  </div>
+  <div fxLayout="column" style="width:35%">
+    <mat-form-field style="width: 90%;">
+      <input matInput  [(ngModel)] = "config['addr2']">
+    </mat-form-field>
+  </div>
+</div>
+<div fxLayout="row" style="width:100%;border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:15%;text-align: right;">
+    营业时间1
+  </div>
+  <div fxLayout="column" style="width:35%">
+    <mat-form-field style="width: 90%;">
+      <input matInput  [(ngModel)] = "config['time1']">
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" class="title" style="width:11%;text-align: right;">
+    营业时间2
+  </div>
+  <div fxLayout="column" style="width:35%">
+    <mat-form-field style="width: 90%;">
+      <input matInput  [(ngModel)] = "config['time2']">
+    </mat-form-field>
+  </div>
+</div>
+
+
+<div fxLayout="row" style="width:100%;border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:15%;text-align: right;">
+    領収書ノート
+  </div>
+  <div fxLayout="column" style="width:55%">
+    <mat-form-field style="width: 90%;">
+      <input matInput  [(ngModel)] = "config['note1']">
+    </mat-form-field>
+  </div>
+</div>
+<div fxLayout="row" style="width:100%;border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:30%;text-align: right;">
+  </div>
+  <div fxLayout="column" style="width:70%">
+    <button mat-raised-button style="width: 100px;"
+    color="primary"
+    (click)="ok($event)">确认</button>
+  </div>
+</div>

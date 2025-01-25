@@ -1,0 +1,105 @@
+<mat-sidenav-container fxLayout="column"
+                       fxLayoutAlign="space-between none"
+                       class="mat-sidenav-content">
+    <div class="inventoryControl"
+         fxLayout="row"
+         fxLayoutAlign="space-between none"
+         fxLayoutGap="10px">
+        <div class="inventoryControl-list"
+             fxFlex>
+            <mat-toolbar class="sticky-toolbar" color="basic">
+                <mat-icon class="mat-back-icon"
+                          (click)="onCancel()">
+                    arrow_back
+                </mat-icon>
+                <span>点検結果承認</span>
+                <span class="toolbar-spacer"></span>
+                <button mat-raised-button
+                        color="primary"
+                        (click)="onSave()">点検結果承認済み</button>
+            </mat-toolbar>
+            <div class="table-container">
+                <table mat-table
+                       [dataSource]="dataSource"
+                       class="skydesk-table"
+                       matSort>
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                                          [checked]="selection.hasValue() && isAllSelected()"
+                                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell
+                            *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                          (change)="$event ? selection.toggle(row) : null"
+                                          [checked]="selection.isSelected(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="parts_type">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">部品種類</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.parts_type}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="part_name">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">部品名称</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.part_name}}</td>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="base">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">拠点</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.base}}</td>
+                    </ng-container> -->
+                    <ng-container matColumnDef="parts_theory_inventory_qty">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">部品在庫数量</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.parts_theory_inventory_qty}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="parts_inventory_qty">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">部品実際在庫数量</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.parts_inventory_qty}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="remarks">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:100px;">備考</th>
+                        <td mat-cell
+                            *matCellDef="let row">{{row.remarks}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="button">
+                        <th mat-header-cell
+                            *matHeaderCellDef
+                            style="width:80px;"></th>
+                        <td mat-cell
+                            *matCellDef="let row">
+                            <button mat-raised-button
+                                    color="primary"
+                                    (click)="onEdit()">編集</button>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row
+                        *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row
+                        *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <app-table-empty-message [dataSource]="dataSource"></app-table-empty-message>
+            </div>
+        </div>
+    </div>
+</mat-sidenav-container>

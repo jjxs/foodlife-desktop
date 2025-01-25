@@ -1,0 +1,84 @@
+<mat-sidenav-container fxLayout="column"
+                       fxLayoutAlign="space-between none"
+                       class="mat-sidenav-content">
+    <div class="inventoryControl"
+         fxLayout="row"
+         fxLayoutAlign="space-between none"
+         fxLayoutGap="10px">
+        <div class="inventoryControl-list" fxFlex>
+            <mat-toolbar class="sticky-toolbar" color="basic">
+                <mat-icon class="mat-back-icon"
+                          (click)="onCancel()">
+                    arrow_back
+                </mat-icon>
+                <span class="toolbar-spacer"></span>
+                <button mat-raised-button
+                        color="primary" *ngIf="lists.length>0"
+                        (click)="onSave()">点検承認</button>
+            </mat-toolbar>
+            <div class="componect-container">
+            
+                <div class="search">
+                    <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="start center" style="height: 60px; line-height: 60px;">
+                        <div fxFlex=20 style="padding-left: 30px;">
+                            <mat-select placeholder="種類"
+                                        (selectionChange)="onSelectCategory($event)">
+                                <mat-option *ngFor="let cat of categories" [value]="cat">
+                                    {{cat.name}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                        <div fxFlex=45 style="padding-left: 10px;">
+                            <mat-select placeholder="部品"
+                                        (selectionChange)="onSelectPart($event)">
+                                <mat-option *ngFor="let item of parts" [value]="item">
+                                    {{item.name}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                        <div fxFlex=18 style="padding-left: 10px;">
+                            <input type="text" [(ngModel)]="stock" style="width:120px;" placeholder="数量" />
+                        </div>
+                        <div>
+                            <button mat-raised-button color="primary" (click)="add()">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="app-grid" style="width: 100%">
+                        <tr>
+                            <th style="font-weight: bold;width: 20%;">
+                                種類
+                            </th>
+                            <th style="font-weight: bold;width: 45%;">
+                                部品
+                            </th>
+                            <th style="font-weight: bold;width: 20%;">
+                                数量
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                        <ng-container *ngFor="let item of lists;">
+                            <tr>
+                                <td>
+                                    {{item.cat_name}}
+                                </td>
+                                <td>
+                                    {{item.data_name}}
+                                </td>
+                                <td>
+                                    {{item.stock}}
+                                </td>
+                                <td>
+                                    <button mat-raised-button color="warning" (click)="del(item)">Del</button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-sidenav-container>

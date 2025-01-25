@@ -1,0 +1,12 @@
+table {
+    width: 100%;
+}
+
+table th {
+    text-align: center;
+}
+
+td.mat-cell {
+    font-size: 12px;
+    text-align: left;
+}

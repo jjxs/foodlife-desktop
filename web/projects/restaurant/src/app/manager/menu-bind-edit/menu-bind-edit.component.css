@@ -1,0 +1,17 @@
+.select {
+    height: 50px;
+    width: 50%;
+    margin-top: 20px;
+    line-height: 50px;
+    border-style: groove;
+}
+
+.bind-title {
+    text-align: center;
+    background-color: #ff4081;
+    color: white;
+    height: 40px;
+    /* margin-top: 10px; */
+    line-height: 40px;
+    width: 50%;
+}

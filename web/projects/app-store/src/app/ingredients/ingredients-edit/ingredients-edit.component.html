@@ -1,0 +1,84 @@
+<div [formGroup]="editForm" fxLayout="column" fxLayoutAlign="start center">
+    <!-- <mat-toolbar color="basic">
+        <mat-icon class="mat-back-icon"
+                  (click)="onCancel()">
+            arrow_back
+        </mat-icon>
+        <div style="margin-left: 5px;font-size: 1.0rem !important;">材料詳細編集</div>
+    </mat-toolbar> -->
+    <!-- <app-errors [formGroup]="editForm"></app-errors> -->
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="材料番号" formControlName="ing_no" required autocomplete="off">
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('ing_no').valid || editForm.get('ing_no').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="材料名" formControlName="ing_name" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('ing_name').valid || editForm.get('ing_name').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <mat-select placeholder="カテゴリー" formControlName="ing_cat_id" required>
+                <mat-option *ngFor="let cat of categories" [value]="cat.id">
+                    <span *ngFor="let level of cat.levels;">&nbsp;&nbsp;&nbsp;&nbsp;</span>{{cat.cat_name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('ing_cat_id').valid || editForm.get('ing_cat_id').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex>
+            <input matInput placeholder="在庫単位" (blur)="setRate()" formControlName="stock_unit" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('stock_unit').valid || editForm.get('stock_unit').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" fxLayoutAlign="space-between none" fxLayoutGap="15px" style="width: 80%;">
+        <mat-form-field fxFlex>
+            <input matInput placeholder="在庫平均単価" type="number" formControlName="ave_price" id="content"
+                (click)="clear()" required>
+            <span matSuffix>円{{getStockUnit()}}</span>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('ave_price').valid || editForm.get('ave_price').untouched" id="ave_price_a">
+        <div class="callout" id="ave_price_b">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex>
+            <input matInput placeholder="消費単位（在庫単位と同じの場合は記入不要）" formControlName="consumption_unit">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between none" fxLayoutGap="15px" style="width: 80%;">
+        <mat-form-field fxFlex>
+            <input matInput type="number" placeholder="単位換算レート（在庫単位/消費単位）" formControlName="unit_conv_rate">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between none" fxLayoutGap="15px" style="width: 80%;">
+        <span *ngIf="getUnitPrice()" fxFlex>※消費単価：{{getUnitPrice()}}</span>
+    </div>
+    <div fxLayout="row" style="width: 80%;margin-top: 2em;" fxLayoutAlign="end none">
+
+        <button mat-raised-button color="primary" (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="onSave()">保存</button>
+    </div>
+</div>

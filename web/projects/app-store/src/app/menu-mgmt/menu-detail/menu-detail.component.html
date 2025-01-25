@@ -1,0 +1,270 @@
+<div class="edit-area"
+     [formGroup]="detailForm"
+     fxLayoutAlign="space-between none"
+     fxLayout="column" style="height: 100%">
+    <div style="height: 100%;overflow-y: auto;">
+        <h1 style="text-align: center;font-size: 1.5rem !important;">メニュ－詳細編集</h1>
+        <app-errors [formGroup]="detailForm"></app-errors>
+        <div class="info-header"> メニュー設定 </div>
+        <div fxLayout="row"
+             style="margin: 10px 0;">
+            <div fxLayout="column"
+                 fxLayoutGap="20px"
+                 style="padding:0 10px;"
+                 fxFlex=60>
+                <div>
+                    <mat-checkbox fxFlexAlign=""
+                                  formControlName="usable">使用中</mat-checkbox>
+                                  
+                    <mat-checkbox fxFlexAlign="end" style="margin-left:20px;"
+                                  formControlName="takeout">外卖</mat-checkbox>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutGap="20px">
+                     <!--
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="メニュー番号"
+                               formControlName="no"
+                               required>
+                    </mat-form-field>
+                    -->
+                    <mat-form-field fxFlex=60>
+                        <input matInput
+                               placeholder="メニュー名"
+                               formControlName="name"
+                               required>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="column" fxFlex=60>
+                    <mat-form-field>
+                        <mat-select formControlName="menu_category"
+                                    placeholder="カテゴリー"
+                                    multiple
+                                    #catSelect
+                                    >
+                            <mat-optgroup *ngFor="let group of menu_categories"
+                                          [label]="group.display_name">
+                                <mat-option *ngFor="let cat of group.children"
+                                            [value]="cat.id">
+                                    {{ cat.display_name }}
+                                </mat-option>
+                            </mat-optgroup>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                
+                <div fxLayout="row"
+                     fxLayoutGap="20px">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="標準価格"
+                               type="number"
+                               formControlName="ori_price">
+                    </mat-form-field>
+                    <!--
+                    <div fxFlex
+                         fxLayout="row"
+                         fxLayoutAlign="start center">
+                        <mat-checkbox formControlName="sale">キャンペーン適用</mat-checkbox>
+                    </div>
+                    -->
+                </div>
+
+                <div fxLayout="row"
+                     fxLayoutGap="20px">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="現価格"
+                               type="number"
+                               formControlName="price"
+                               required>
+                    </mat-form-field>
+                    <div fxFlex
+                         fxLayout="row"
+                         fxLayoutAlign="start center">
+                        <mat-checkbox formControlName="tax_in">税込み</mat-checkbox>
+                    </div>
+                </div>
+                
+                <div fxLayout="row">
+                    <mat-form-field fxFlex=100>
+                        <input matInput
+                               placeholder="最小注文数量"
+                               type="number"
+                               formControlName="mincount"
+                               required>
+                    </mat-form-field>
+                </div>
+                  
+                
+                <div fxLayout="row">
+                    <mat-form-field fxFlex=100>
+                      <mat-select placeholder="売り切れ" formControlName="stock_status_id" required>
+                        <mat-option *ngFor="let cat of grouptype" [value]="cat.id">
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>{{cat.value}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+                  
+                <div fxLayout="column">
+                    <mat-form-field>
+                        <mat-select formControlName="menu_option"
+                                    placeholder="作り方"
+                                    multiple (selectionChange)="onChange($event.value)"
+                                    #catSelect
+                                    >
+                            <mat-optgroup *ngFor="let group of menu_options"
+                                          [label]="group.display_name">
+                                <mat-option *ngFor="let cat of group.children"
+                                            [value]="cat.id">
+                                    {{ cat.display_name }}
+                                </mat-option>
+                            </mat-optgroup>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="menu-option-price" *ngIf="menu_option_price.length>0">
+                        <div class="menu-option-desc">
+                            作り方追加金額
+                        </div>
+                        <div class="menu-option" *ngFor="let mo of menu_option_price">
+                            <span>{{showDisplayName(mo.id)}}: </span>
+                            <input matInput [value]="mo.price" (change)="changePrice($event, mo)"
+                                placeholder="0" 
+                                type="number">円
+                        </div>
+                    </div>
+                </div>
+
+
+                <div fxLayout="row">
+                    <mat-form-field fxFlex=100>
+                        <textarea matInput
+                                  style="height:5vw;"
+                                  placeholder="説明"
+                                  formControlName="introduction">
+                                </textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxLayout="column"
+                 fxLayoutAlign="start center"
+                 fxFlex>
+                <span class="menu-image">
+                    <img src="assets/img/no_image.jpg"
+                         class="menu-image"
+                         *ngIf="!image && !menuImage">
+                    <img [src]="image"
+                         class="menu-image"
+                         *ngIf="image">
+                    <img [src]="menuImage"
+                         class="menu-image"
+                         *ngIf="menuImage">
+                </span>
+                <div>
+                    <button mat-button
+                            style="width: 100px;"
+                            [matMenuTriggerFor]="menu">
+                        写真編集
+                        <mat-icon>arrow_drop_down</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item
+                                (click)="onSelectPhoto()">写真選択</button>
+                        <button mat-menu-item
+                                (click)="onDeletePhoto()">写真削除</button>
+                    </mat-menu>
+                </div>
+                <input type="file"
+                       style="display: none"
+                       accept=".png,.jpg,.jpeg"
+                       (change)="onChangeFileInput()"
+                       #fileInput>
+            </div>
+
+
+        </div>
+        <div class="info-header"> レシピ </div>
+        <div formArrayName="recipe"
+             style="margin: 10px 0;"
+             fxLayout="column"
+             fxLayoutGap="20px">
+            <div fxLayout="row"
+                 fxLayoutAlign="start none"
+                 style="padding-left: 10px">
+                <span>材料コスト合計：</span>
+                <span>{{getTotalCost()}}円</span>
+            </div>
+            <div *ngFor="let item of recipe.controls; let i = index"
+                 [formGroupName]="i"
+                 fxLayout="column"
+                 style="padding: 0 10px;">
+                <div fxLayout="row"
+                     fxLayoutAlign="center none"
+                     fxLayoutGap="10px" style="width: 100%;">
+                    <mat-form-field fxFlex=28>
+                        <mat-select formControlName="ing_id"
+                                    (selectionChange)="onSelectIng($event, item)"
+                                    placeholder="材料名">
+                            <mat-option *ngFor="let ing of ingList"
+                                        [value]="ing.ing_id">
+                                {{ing.ing_name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint *ngIf="getIngPrice(item)">※材料単価：{{getIngPrice(item)}}</mat-hint>
+                    </mat-form-field>
+                    <!-- <mat-form-field fxFlex=20>
+                        <input matInput
+                               type="number"
+                               [readonly]="!item.value['ing_id']"
+                               placeholder="分量"
+                               formControlName="serving">
+                        <span matSuffix>{{getUnit(item)}}</span>
+                    </mat-form-field> -->
+                    <mat-form-field fxFlex=26>
+                        <input matInput
+                               type="number"
+                               [readonly]="!item.value.ing_id"
+                               placeholder="使用量"
+                               (blur)="getRecipePrice(item)"
+                               formControlName="amount_to_use">
+                        <span matSuffix>{{getUnit(item)}}</span>
+                    </mat-form-field>
+                    <mat-form-field fxFlex=26>
+                        <input matInput
+                               placeholder="コスト"
+                               readonly
+                               formControlName="recipe_cost">
+                    </mat-form-field>
+                    <button mat-icon-button
+                            (click)="onDeleteRecipe(i)">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            clear
+                        </mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div fxLayout="row"
+                 fxLayoutAlign="center none">
+                <button mat-stroked-button
+                        (click)="onAddRecipe()">
+                    材料を追加
+                    <mat-icon matSuffix>
+                        add
+                    </mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <mat-toolbar class="window-footer">
+        <span class="toolbar-spacer"></span>
+        <button mat-raised-button
+                color="primary"
+                (click)="onCancel()">取消</button>
+        <button mat-raised-button
+                color="primary"
+                (click)="onSave()">保存</button>
+    </mat-toolbar>
+</div>

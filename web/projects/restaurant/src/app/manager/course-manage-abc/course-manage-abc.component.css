@@ -1,0 +1,54 @@
+.select {
+    margin-left: 20px;
+    width: 300px;
+}
+
+.title {
+    padding: 10px 0 10px 10px;
+    border-bottom: solid 1px;
+    margin: 10px 0;
+    color: #f44336;
+}
+
+.example-item {
+    font-size: 80%;
+}
+
+.mat-list-base .mat-list-item {
+    height: 45px !important;
+}
+
+
+/* .mat-mini-fab {
+    height: 28px !important;
+    width: 28px !important;
+}
+
+.mat-mini-fab span {
+    padding: 0px !important;
+    line-height: unset !important;
+} */
+
+.title2 {
+    padding: 10px 0 0px 10px;
+    color: #f44336;
+}
+
+.text-list {
+    background-color: #ffd740;
+    margin-top: 10px;
+}
+
+.menu-list {
+    padding: 10px;
+}
+
+.menu {
+    margin: 5px;
+    font-weight: 100;
+    font-size: 90%;
+}
+
+.menu input {
+    margin-right: 10px;
+}

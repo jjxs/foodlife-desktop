@@ -1,0 +1,86 @@
+<div class="chart-list">
+  <h3>料理売上統計表</h3>
+  <div fxLayout="row" style="margin-top: 10px; width: 100%;">
+
+    <div>
+      <mat-form-field class="example-full-width"  style="width:120px; margin-left: 20px;">
+        <input matInput [matDatepicker]="picker1" placeholder="開始時間" [formControl]="date1" (dateChange)="dateChange($event, 1)" >
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker1></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" style="width:120px; margin-left: 20px;">
+        <input matInput [matDatepicker]="picker2" placeholder="終了時間" [formControl]="date2" (dateChange)="dateChange($event, 2)" >
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker2></mat-datepicker>
+      </mat-form-field>
+
+
+        <mat-form-field style="width:300px; margin-left: 20px;">
+            <mat-label>カテゴリー</mat-label>
+              <mat-select [formControl]="menu_categorys"
+                        placeholder="カテゴリー"
+                        multiple
+                        #catSelect
+                        >
+                <mat-optgroup *ngFor="let group of cat_list"
+                              [label]="group.display_name">
+                    <mat-option *ngFor="let cat of group.children"
+                                [value]="cat.id">
+                        {{ cat.display_name }}
+                    </mat-option>
+                </mat-optgroup>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+
+    <div fxLayoutAlign="start end">
+      <button mat-raised-button color="primary" (click)="getData()" style="margin-left: 20px;margin-bottom: 20px;margin-right: 40px;height: 36px;">
+        検索
+      </button>
+    </div>
+  </div>
+  <!--
+  <div echarts [options]="chartOption"></div>
+  -->
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- menu_name Column -->
+    <ng-container matColumnDef="menu_name">
+      <th mat-header-cell *matHeaderCellDef> メニュー </th>
+      <td mat-cell *matCellDef="let element"> {{element.menu_name}} </td>
+    </ng-container>
+
+    <!-- total Column -->
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> 注文数量 </th>
+      <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+    </ng-container>
+    
+    <!-- total_price Column -->
+    <ng-container matColumnDef="total_price" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> 売上 </th>
+      <td mat-cell *matCellDef="let element"> {{element.total_price | currency:'￥':'symbol':'1.0-0'}} </td>
+    </ng-container>
+    
+    <!-- dinner Column -->
+    <ng-container matColumnDef="dinner">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ディナー </th>
+      <td mat-cell *matCellDef="let element"> {{element.dinner | currency:'￥':'symbol':'1.0-0'}} </td>
+    </ng-container>
+    
+    <!-- lunch Column -->
+    <ng-container matColumnDef="lunch">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ランチ</th>
+      <td mat-cell *matCellDef="let element"> {{element.lunch | currency:'￥':'symbol':'1.0-0'}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

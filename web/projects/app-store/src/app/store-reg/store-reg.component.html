@@ -1,0 +1,275 @@
+<mat-sidenav-container class="mat-sidenav-content">
+    <div fxLayout="row"
+         style="height: 100%;"
+         fxLayoutAlign="center none">
+    <mat-horizontal-stepper (selectionChange)="onCheck($event)"
+                            fxLayout="column"
+                            class="reg-form"
+                            style="width: 70%;"
+                            #stepper>
+        <mat-step [stepControl]="storeInfoForm"
+                  label="店舗基本情報"
+                  [editable]="editable">
+            <app-errors [formGroup]="storeInfoForm"></app-errors>
+            <div [formGroup]="storeInfoForm"
+                 fxLayoutGap="10px"
+                 fxLayout="column">
+                <div fxLayout="row"
+                     fxLayoutGap="20px">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="店舗コード"
+                               formControlName="store_code"
+                               required>
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="店舗名"
+                               formControlName="store_name"
+                               required>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="郵便番号"
+                               formControlName="postal_code">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                    <mat-form-field fxFlex>
+                        <mat-select formControlName="state"
+                                    placeholder='都道府県'>
+                            <mat-option></mat-option>
+                            <mat-option *ngFor="let state of states"
+                                        [value]="state.code">
+                                {{state.display_name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="市区町村"
+                               formControlName="city">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="丁目番地"
+                               formControlName="street_address">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="ビル名"
+                               formControlName="building_name">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="電話番号"
+                               formControlName="phone_number">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                    <mat-form-field fxFlex>
+                        <textarea matInput
+                                  placeholder="営業時間"
+                                  matTextareaAutosize
+                                  matAutosize="true"
+                                  matAutosizeMinRows=5
+                                  formControlName="opening_time"></textarea>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                    <mat-form-field fxFlex>
+                        <textarea matInput
+                                  placeholder="備考"
+                                  matTextareaAutosize
+                                  matAutosize="true"
+                                  matAutosizeMinRows=5
+                                  formControlName="remarks"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row"
+                 style="margin-top: 4em;"
+                 fxLayoutAlign="space-around none">
+                <button mat-raised-button
+                        color="primary"
+                        (click)="goForward(storeInfoForm, stepper)">次へ</button>
+            </div>
+        </mat-step>
+        <mat-step [stepControl]="storeSiteForm"
+                  label="店舗サイト情報"
+                  [editable]="editable">
+            <div [formGroup]="storeSiteForm"
+                 fxLayoutGap="10px"
+                 fxLayout="column">
+                <app-errors [formGroup]="storeSiteForm"></app-errors>
+                <div fxLayout="row"
+                     fxLayoutGap="20px">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="IPアドレス"
+                               formControlName="ip_address"
+                               required>
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="ポートNO"
+                               formControlName="port_no"
+                               required>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutGap="20px">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="データベース名"
+                               formControlName="db_name"
+                               required>
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="データベースポート番号"
+                               formControlName="db_port_no"
+                               required>
+                    </mat-form-field>
+                </div>
+                <mat-form-field fxFlex>
+                    <input matInput
+                           placeholder="データベースホスト"
+                           formControlName="db_host"
+                           required>
+                </mat-form-field>
+                <div fxLayout="row"
+                     fxLayoutGap="20px">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="データベースユーザー"
+                               formControlName="db_user"
+                               required>
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="データベースパスワード"
+                               formControlName="db_password"
+                               required>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutGap="20px">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="クライアントIPアドレス"
+                               formControlName="client_ip"
+                               required>
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="クライアントポート番号"
+                               formControlName="client_port_no"
+                               required>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutGap="20px">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="サーバーIPアドレス"
+                               formControlName="server_ip"
+                               required>
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="サーバーポートNO"
+                               formControlName="server_port_no"
+                               required>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutGap="20px">
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="WebSocket IPアドレス"
+                               formControlName="websocket_ip"
+                               required>
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                        <input matInput
+                               placeholder="WebSocket ポート番号"
+                               formControlName="websocket_port_no"
+                               required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row"
+                 style="margin-top: 5em;"
+                 fxLayoutAlign="space-around none">
+                <button mat-raised-button
+                        color="primary"
+                        (click)="goBack(stepper)">戻る</button>
+                <button mat-raised-button
+                        color="primary"
+                        (click)="goForward(storeSiteForm, stepper)">次へ</button>
+            </div>
+        </mat-step>
+        <mat-step [stepControl]="storeSiteForm"
+                  label="入力情報確認"
+                  [editable]="editable">
+            <div fxLayout="column"
+                 fxLayoutGap="10px">
+                <div class="info-header"> 店舗基本情報 </div>
+                <table width="100%">
+                    <tr *ngFor="let item of storeInfo">
+                        <td class="table-key">{{item.name}}</td>
+                        <td>{{item.value}}</td>
+                    </tr>
+                </table>
+                <div class="info-header"> 店舗サイト情報 </div>
+                <table width="100%">
+                    <tr *ngFor="let item of storeSite">
+                        <td class="table-key">{{item.name}}</td>
+                        <td>{{item.value}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div fxLayout="row"
+                 style="margin-top: 5em;"
+                 fxLayoutAlign="space-around none">
+                <button mat-raised-button
+                        color="primary"
+                        (click)="goBack(stepper)">戻る</button>
+                <button mat-raised-button
+                        color="primary"
+                        (click)="onRegister(stepper)">登録</button>
+            </div>
+        </mat-step>
+        <mat-step label="完了"
+                  [editable]="editable">
+            <div class='success-message'>登録が完了しました。</div>
+            <div fxLayout="column"
+                 style="margin-top: 5em;"
+                 fxLayoutAlign="space-around center">
+                <div>
+                    <button mat-raised-button
+                            color="primary"
+                            style="width: 100px !important;"
+                            (click)="onContinue(stepper)">続けて登録</button>
+                </div>
+                <div>
+                    <button mat-raised-button
+                            color="primary"
+                            style="width: 100px !important;"
+                            (click)="onClose()">閉じる</button>
+                </div>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper></div>
+</mat-sidenav-container>

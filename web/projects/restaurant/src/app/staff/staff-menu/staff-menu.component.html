@@ -1,0 +1,359 @@
+<div [ngClass]="{'staff-menu container': !doing, 'container-full': doing}" fxLayout="row" *ngIf="staffmenu==true" style="width:100vw;padding:0px;">
+  <!-- <div style="overflow-y:auto;padding:5px;">
+    <div *ngFor="let seat of seatList">
+      <button class="seat-button" mat-raised-button [color]="selectedSeat===seat?'accent':'primary'" (click)="selectSeat(seat)">{{seat.seat_no}}</button>
+    </div>
+  </div> -->
+  <div fxFlex fxLayout="column">
+    <mat-toolbar fxFlex="54px" (swiperight)="refreshTask()">
+      <mat-toolbar-row style="padding: 0px;">
+        <!-- <button mat-mini-fab (click)="refreshTask()" color="accent">
+          <mat-icon>refresh</mat-icon>
+        </button> -->
+        <button mat-raised-button (click)="showSeatMap()" style="margin-left: 10px;">
+          <mat-icon class="example-icon">event_seat</mat-icon>
+          「 {{selectedSeat['seat_no']}} 」
+        </button>
+        <!-- <span *ngIf="selectedSeat" style="padding-left: 10px">No.{{ selectedSeat["seat_no"] }}</span> -->
+        <span class="toolbar-spacer"></span>
+        
+        <button *ngIf="canOrder && ( tabIndex === 0  )" mat-raised-button color="warn" (click)="order($event)"  style="margin-right:10px;">
+          注文確定
+        </button>
+        <button *ngIf="canOrder && tabIndex === 1  && other_list.length>0" mat-raised-button color="warn" (click)="orderOther($event)"  style="margin-right:10px;">
+          注文確定
+        </button>
+        
+        <button mat-raised-button *ngIf="canOrder==false && selectedSeat" (click)="startSeat()" color="primary" style="margin-right:10px;">
+          开始利用
+        </button>
+
+        <div [ngClass]="{'container-btn-list':show_btn_list}" (click)="hideBtnList()"></div>
+        <div [ngClass]="{'btn-list':1, 'btn-list-toogle-show': show_btn_list}">
+          <button mat-mini-fab *ngIf="show_btn_list" class="btn-list-toogle" (click)="hideBtnList()">
+            <mat-icon class="example-icon">menu</mat-icon>
+          </button>
+          
+          <!-- <button *ngIf="selectedSeat" mat-raised-button style="margin-right:25px" (click)="openMenufree($event)">
+            <mat-icon>restaurant</mat-icon>
+            放題注文
+          </button> -->
+          <button mat-raised-button *ngIf="canOrder" (click)="seatSet()" color="primary">
+            <mat-icon>group_add</mat-icon>
+            利用者
+          </button>
+          <button mat-raised-button *ngIf="canOrder && !isFreeStart(selectedSeat)" (click)="startFreeMenu($event, selectedSeat)" color="primary" style="margin-left:10px;">
+            放題
+          </button>
+          <button mat-raised-button *ngIf="canOrder && isFreeStart(selectedSeat)" (click)="stopFreeMenu($event, selectedSeat)" color="primary" style="margin-left:10px;">
+            放題中止
+          </button>
+          <button mat-raised-button *ngIf="canOrder" (click)="changeSeat()" color="primary" style="margin-left:10px;">
+            席変更
+          </button>
+            
+          
+          <button mat-mini-fab  color="" (click)="showStaffCounter()">
+            <mat-icon class="example-icon">{{magicBtn}}</mat-icon>
+          </button>
+
+          
+        </div>
+        <!-- <button *ngIf="selectedSeat && tabIndex === 3" mat-raised-button color="warn" (click)="pay($event)">
+          会計
+        </button> -->
+        
+        <button mat-mini-fab class="btn-list-toogle" (click)="showBtnList()">
+          <mat-icon class="example-icon">apps</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <!-- <mat-grid-list cols="7" rowHeight="45px" gutterSize="5" style="width:100%;">
+      <ng-container *ngFor="let seat of seatList">
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <button class="count-button" mat-raised-button [color]="selectedSeat===seat?'accent':'primary'" (click)="selectSeat(seat)">{{seat.seat_no}}</button>
+        </mat-grid-tile>
+      </ng-container>
+    </mat-grid-list> -->
+
+    <div *ngIf="canOrder && staffSrv.menuMasterGroup.length === 0">データ読み取り中。。。。。。</div>
+    <!-- ########################### ■ 操作部 ################################ -->
+    <mat-tab-group *ngIf="canOrder"  [selectedIndex]="tabIndex" fxFlex style="margin: 0px" (selectedIndexChange)="tabChange($event)">
+      <!--  明細選択  -->
+      <mat-tab label="注文" >
+        <ng-template matTabContent>  
+          <div fxFlexFill>
+            <!-- <div>
+              <ng-container *ngFor="let group of staffSrv.menuMasterGroup;">
+                <button class="group-button" mat-raised-button color="accent" (click)="clickCategory(group)" [disabled]="group === select_group">{{group.display_name}}</button>
+              </ng-container>
+            </div> -->
+            <div class="menu-tab">
+                <div class="menu-tab-btn">
+                  <div *ngFor="let group of staffSrv.menuMasterGroup;">
+                    <button class="master-button" mat-raised-button color="accent" (click)="clickCategory(group)" [disabled]="group === select_group">{{group.display_name}}</button>
+                  </div>
+                </div>
+              <!-- <div *ngIf="select_group" style="overflow-y:auto;padding:5px">
+                <div *ngFor="let master of select_group.master_data">
+                  <button class="master-button" mat-raised-button color="primary" (click)="clickMaster(master)" style="width:80px;margin-top:5px;padding:5px;font-weight: 100;
+                  font-size: 12px;"
+                    [disabled]="master === select_master">{{master.display_name}}</button>
+                </div>
+              </div> -->
+              <!-- <div fxFlex *ngIf="select_menus" style="padding:5px;overflow-y:auto;border-left:1px solid;"> -->
+              <div fxFlex *ngIf="select_menus" class="menu-list" (swipeleft)="nextClick($event)">
+                <mat-card-content>
+                  <div *ngFor="let master of select_group.master_data">
+                    <div class="category" (click)="clickMaster(master)">{{master.display_name}}</div>
+                    <ng-container *ngIf="showCategory(master)">
+                      <ng-container *ngFor="let menu of staffSrv.categoryMenus[master.id]">
+                        <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 1px 0px; ">
+
+                          <number-selecter [(count)]=" menu.count"></number-selecter>
+                          <div fxLayout="column" class="menu-image"  (click)="addCart(menu)">
+                            <img *ngIf="menu.id" src="{{site_image_host}}{{menu.image}}"/>
+                          </div>
+                          <div fxFlex fxLayout="column" style="padding-left:10px" (click)="addCart(menu)">
+                            <div fxLayout="row" fxLayoutAlign="space-between center">
+                              <!-- <span fxFlex="50">
+                                <span>[{{ menu.no }}]</span>
+                                <span *ngIf="menu.is_free" class="bgcolor-primary" style="padding:3px;margin-left:10px">放題</span>
+                              </span> -->
+                              <span fxFlex="50">
+                                <span [ngClass]="{ 'del-line' : menu.is_free}">{{menu.price | currency:'￥':'symbol':'1.0-0'}}</span>
+                              </span>
+                            </div>
+                            <span fxFlex class="menu" [ngClass]="{ 'selected-menu bgcolor-accent' : menu['count'] > 0}">
+                              {{menu.name}}</span>
+                          </div>
+
+                        </div>
+                        <mat-divider></mat-divider>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </mat-card-content>
+              </div>
+              <div  fxFlex class="cart-list" (swipeleft)="nextClick($event)">
+                <mat-card-content>
+                  <ng-container *ngFor="let key of objectKeys(staffSrv.noMenus)">
+                    <div *ngIf="staffSrv.noMenus[key].count > 0 " fxLayout="row" class="menu" fxLayoutAlign="space-between center" style="padding-top:10px;padding-bottom:10px;border-bottom: solid 0.5px;">
+                      <!-- <span fxFlex="15"> 
+                        {{ staffSrv.noMenus[key].no }}
+                        <span class="bgcolor-accent" *ngIf="staffSrv.noMenus[key].is_free" style="padding:5px;margin-left:10px">(放題)
+                        </span>
+                      </span> -->
+                      <span fxFlex> {{staffSrv.noMenus[key].name}}</span>
+                      <span fxFlex="15" [ngClass]="{ 'del-line' : staffSrv.noMenus[key].is_free}">
+                        {{staffSrv.noMenus[key].price | currency:'￥':'symbol':'1.0-0'}}</span>
+                      <span fxFlex="15"> {{staffSrv.noMenus[key].count}} 個</span>
+                    </div>
+                  </ng-container>
+                </mat-card-content>
+              </div>
+              <!-- </div> -->
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <!--  番号で注文  -->
+      <!-- <mat-tab label="番号で注文" style="height: 100%;">
+        <ng-template matTabContent>
+          <div fxLayout="column" fxFlexFill fxLayoutAlign="space-between none">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-form-field style="text-align:right;font-size:130%;">
+                <input matInput type="number" [value]="input_no" [readonly]="true">
+                <span matPrefix>NO：&nbsp;</span>
+                <span *ngIf="input_menu.is_free" class="bgcolor-primary" style="padding:3px;margin-left:10px" matSuffix>放題</span>
+              </mat-form-field>
+              <div fxLayout="row" fxLayoutAlign="space-between center" style="padding-bottom: 10px;">
+                <span>{{input_menu.name}}</span>
+                <span fxLayoutAlign="end" [ngClass]="{ 'del-line' : input_menu.is_free}">
+                  {{input_menu.price | currency:'￥':'symbol':'1.0-0' }}</span>
+              </div>
+              <number-selecter [(count)]="input_count" fxLayoutAlign="end"></number-selecter>
+            </div>
+
+            <div fxFlex>
+              <mat-grid-list cols="3" rowHeight="fit" gutterSize="10" style="width:100%;height:100%">
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button" mat-raised-button color="accent" (click)="backspaceInput()">
+                    <mat-icon>arrow_back</mat-icon>
+                  </button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button" mat-raised-button color="accent" (click)="clearInput()">C</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button" mat-raised-button color="warn" (click)="append()" [disabled]="input_menu.name.length === 0 || input_count === 0">追加</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onInput('7')">7</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onInput('8')">8</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onInput('9')">9</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onInput('4')">4</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onInput('5')">5</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onInput('6')">6</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onInput('1')">1</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onInput('2')">2</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onInput('3')">3</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onInput('0')">0</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button" mat-raised-button color="primary" (click)="onInput('00')">00</button>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab> -->
+      <!--  その他注文  -->
+      <mat-tab label="その他の注文"  >
+        <ng-template matTabContent>
+          <div fxLayout="column" class="other-menu-list" (swiperight)="preClick($event)" (swipeleft)="nextClick($event)">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <div flex="65%">
+                <mat-radio-group [(ngModel)]="other.model" color="primary">
+                  <mat-radio-button value="0" style="padding-left: 0px">税抜注文</mat-radio-button>
+                  <mat-radio-button value="1" style="padding-left: 20px">税込注文</mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <div flex="35%">
+                <number-selecter [(count)]="other.count" fxLayoutAlign="end"></number-selecter>
+              </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="input-money-line">
+              <mat-form-field style="text-align:right;width:60%; max-width: 60%;">
+                <input matInput type="text" [value]="other.price" [readonly]="true" style="font-size:120%">
+                <span matPrefix>￥：&nbsp;</span>
+                <span class="bgcolor-primary" style="padding:3px;margin-left:10px" matSuffix>円（{{ other.model === "0" ?
+                  "税抜":"税込" }}）</span>
+              </mat-form-field>
+              <span>({{other.price | currency:'￥':'symbol':'1.0-0'}})</span>
+            </div>
+
+            <div fxFlex>
+              <mat-grid-list cols="3" rowHeight="fit" gutterSize="10" style="width:100%;height:100%">
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button" mat-raised-button color="accent" (click)="backspacePrice()">
+                    <mat-icon>arrow_back</mat-icon>
+                  </button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button" mat-raised-button color="accent" (click)="clearPrice()">C</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button" mat-raised-button color="warn" (click)="addOtherMenu()" [disabled]="other.price===0 || other.count ===0">追加</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onPrice('7')">7</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onPrice('8')">8</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onPrice('9')">9</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onPrice('4')">4</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onPrice('5')">5</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onPrice('6')">6</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onPrice('1')">1</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onPrice('2')">2</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onPrice('3')">3</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1">
+                  <button class="count-button number" mat-raised-button color="primary" (click)="onPrice('0')">0</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <button class="count-button" mat-raised-button color="primary" (click)="onPrice('00')">00</button>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+          </div>
+          <div fxLayout="column" class="other-cart-list" (swiperight)="preClick($event)" (swipeleft)="nextClick($event)">
+            <mat-card-content>
+              <ng-container *ngFor="let item of other_list; index as i;">
+                <div *ngIf="item.count > 0 " fxLayout="row" fxLayoutAlign="space-between center" style="padding-top:10px;padding-bottom:10px;border-bottom: solid 0.5px;">
+                  <span fxFlex="15">
+                    <button type="button" mat-mini-fab (click)="removeOtherMenu(i)" style="margin-left: 10px;">
+                      <mat-icon color="primary">close</mat-icon>
+                    </button>
+                  </span>
+                  <!-- <span fxFlex> その他注文</span> -->
+                  <div >
+                    <div> {{ item.model === "0" ? "税抜":"☆税込" }}:  {{item.price | currency:'￥':'symbol':'1.0-0'}}</div>
+                    <div *ngIf="item.model === '0'">税額：{{item.tax | currency:'￥':'symbol':'1.0-0'}}</div>
+                  </div>
+                  <span fxFlex="15"> {{item.count}} 個</span>
+                </div>
+              </ng-container>
+            </mat-card-content>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="りれき" >
+        <ng-template matTabContent>
+          <div class="history" (swiperight)="preClick($event)" (swipeleft)="nextClick($event)">
+            <restaurant-order-history [seatId]="selectedSeat.id" [seat]="selectedSeat" [display_model]="'time'" [refreashTime]="refreashTime" [show]="true" [isGuest]="false" ></restaurant-order-history>
+          </div>
+        </ng-template>
+      </mat-tab>
+      
+    <!-- <mat-tab label="会計" >
+      <ng-template matTabContent>  
+        <div class="counter" (swiperight)="preClick($event)">
+          <div class="counter-panel">
+            <restaurant-counter-panel [counterId]="counterId" [total]="moneyTotal" (pay)="onPay($event)">
+            </restaurant-counter-panel>
+          </div>
+        </div>
+      </ng-template>
+    </mat-tab> -->
+
+<!--
+    <mat-tab label="会計" >
+      <ng-template matTabContent >  
+        <div class="counter" (swiperight)="preClick($event)">
+          <app-counter [showHeader]="false" [showCounterSearch]="false" [showHistory]="false" [inputSeat]="selectedSeat" >
+          </app-counter>
+        </div>
+      </ng-template>
+    </mat-tab>
+-->
+    </mat-tab-group>
+  </div>
+
+</div>
+<seat-map *ngIf="seatmap==true" (selectSeat)="onSelectSeat($event)" ></seat-map>
+<restaurant-staff-counter *ngIf="staffcounter==true" (showMenu)="showMenu($event)" ></restaurant-staff-counter>
+<restaurant-staff-setting *ngIf="staffsetting==true" (showMenu)="showMenu($event)" ></restaurant-staff-setting>

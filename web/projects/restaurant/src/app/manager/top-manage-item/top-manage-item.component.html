@@ -1,0 +1,94 @@
+<div fxLayout="row" style="width:100%;border-radius: 5px;">
+  <mat-form-field style="width: 100%;">
+    <mat-select placeholder="操作" [(value)]="target_type" (selectionChange)="change_target_type($event)">
+      <mat-option *ngFor="let data of target_types" [value]="data.key">
+        {{data.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<!-- 
+<div fxLayout="row" style="width:100%;border-radius: 5px;">
+  <mat-form-field style="width: 100%;">
+    <input matInput [(ngModel)] = "name"
+            placeholder="信息说明">
+  </mat-form-field>
+</div> -->
+
+<div fxLayout="row" style="width:100%;border-radius: 5px;" *ngIf="target_type=='link'">
+  <mat-form-field style="width: 100%;">
+    <mat-select (selectionChange)="chagne_group($event.value)" placeholder="菜单组" [(value)]="group_id">
+      <mat-option *ngFor="let data of groups" [value]="data.key">
+        {{data.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div fxLayout="row" style="width:100%;border-radius: 5px;" *ngIf="target_type=='link'">
+  <mat-form-field style="width: 100%;">
+    <mat-select placeholder="菜单分类" [(value)]="category_id">
+      <mat-option *ngFor="let data of categorys" [value]="data.key">
+        {{data.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<!-- <div fxLayout="row" style="width:100%;border-radius: 5px;" *ngIf="target_type=='link' || target_type=='image'">
+  <mat-form-field style="width: 100%;">
+    <input matInput [(ngModel)]="image" placeholder="图片地址">
+  </mat-form-field>
+</div> -->
+<!-- 主図図片 -->
+<div fxLayout="row" style="width:100%;border-radius: 5px;"
+  *ngIf="target_type=='dialog-image' || target_type=='link' || target_type=='image'">
+  <button mat-button style="width: 112px;background-color: #6D38B5;color: white;" (click)="onSelectPhoto('1')">
+    主図図片選択
+  </button>
+  <input type="file" style="display: none" accept=".png,.jpg,.jpeg" (change)="onChangeFileInput()" #fileInput>
+</div>
+<div fxLayout="row" style="width:100%;border-radius: 5px;"
+  *ngIf="target_type=='dialog-image' || target_type=='link' || target_type=='image'">
+  <img src="{{site_image_host}}{{image}}" style="width: 27%;height: 92px;padding: 10px;"
+    *ngIf="!imagesrc1 && image != null">
+  <img [src]="imagesrc1" style="width: 27%;height: 92px;padding: 10px;" *ngIf="imagesrc1 != null">
+</div>
+<!-- 主図図片 -->
+
+<!-- 图片列表 -->
+<div fxLayout="row" style="width:100%;border-radius: 5px;" *ngIf="target_type=='dialog-image'">
+  <button mat-button style="width: 112px;background-color: #6D38B5;color: white;" (click)="onSelectPhoto('2')">
+    图片列表選択
+  </button>
+  <input type="file" style="display: none" accept=".png,.jpg,.jpeg" (change)="onChangeFileInput()" #fileInput2>
+</div>
+<div fxLayout="row" style="width:100%;border-radius: 5px;" *ngIf="target_type=='dialog-image'">
+  <mat-form-field style="width: 100%;height: 200px;overflow-x: auto;">
+    <input readonly matInput style="width:100%;margin-bottom: 10px;display: none;" placeholder="">
+    <ng-container *ngFor="let item of imginfolist;let i = index">
+      <div style="display: inline-block;width: 27%;padding: 0 13px 0 0;">
+        <div style="position: relative;">
+          <img src="{{item}}" style="width: 100%;height: 92px;padding: 10px;" />
+        </div>
+        <div>
+          <a href="javascript:void(0)" class="divX" id="img_zindex_div_1" (click)="del('new',i)">×</a>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngFor="let item of option_list;let i = index">
+      <div style="display: inline-block;width: 27%;padding: 0 13px 0 0;">
+        <div style="position: relative;">
+          <img id="img{{i}}" src="{{site_image_host}}{{item}}" style="width: 100%;height: 92px;padding: 10px;"
+            *ngIf="option != ''">
+        </div>
+        <div>
+          <a href="javascript:void(0)" class="divX" id="img_zindex_div_1" (click)="del('old',i)"
+            *ngIf="option != ''">×</a>
+        </div>
+      </div>
+    </ng-container>
+  </mat-form-field>
+</div>
+<!-- 图片列表 -->
+<div fxLayout="row" style="width:100%;border-radius: 5px;margin-top: 17px;">
+  <button mat-raised-button color="primary" (click)="ok($event)">确认</button>
+</div>

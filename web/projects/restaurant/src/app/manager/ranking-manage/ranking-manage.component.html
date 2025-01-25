@@ -1,0 +1,42 @@
+<div fxLayout="row" style="width:100%;margin-top: 5px; border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:30%;text-align: right;">
+    テーマ
+  </div>
+  <div fxLayout="column" style="width:30%; line-height: 40px;">
+    <mat-select placeholder="テーマ" [(value)]="top_theme">
+      <mat-option *ngFor="let data of top_themes" [value]="data.key">
+        {{data.value}}
+      </mat-option>
+    </mat-select>
+  </div>
+</div>
+
+<div fxLayout="row" style="width:100%;margin-top: 5px; border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:30%;text-align: right;">
+    ランキング分类
+  </div>
+  <div class="newspan" fxLayout="column" style="width:70%;">
+    <label style="width: 25%;display: inline-block;padding: 5px 0 5px 0;" *ngFor="let group of category">
+      <mat-checkbox class="checkbox" [(ngModel)]="group.checked"></mat-checkbox>
+      {{ group.display_name }}
+    </label>
+  </div>
+</div>
+
+<div fxLayout="row" style="width:100%;margin-top: 5px; border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:30%;text-align: right;">
+    ランキング商品数量
+  </div>
+  <div fxLayout="column" style="width:70%">
+    <mat-form-field style="width: 100%;">
+      <input matInput [(ngModel)]="limit">
+    </mat-form-field>
+  </div>
+</div>
+<div fxLayout="row" style="width:100%;margin-top: 5px; border-radius: 5px;">
+  <div fxLayout="column" class="title" style="width:30%;text-align: right;">
+  </div>
+  <div fxLayout="column" style="width:70%">
+    <button mat-raised-button style="width: 100px;" color="primary" (click)="ok($event)">确认</button>
+  </div>
+</div>

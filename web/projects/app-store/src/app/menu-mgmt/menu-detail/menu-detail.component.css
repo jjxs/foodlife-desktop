@@ -1,0 +1,45 @@
+.info-header {
+    padding: 0.8em 0.4em;
+    font-weight: bold;
+    font-size: 1rem !important;
+    color: #494949;
+    border-left: solid 5px #7db4e6;
+    background-color: #c0e0ff;
+}
+
+.edit-area {
+    height: calc(100vh - 55px);
+    overflow-y: auto;
+}
+
+.menu-image {
+    width: 180px;
+    height: 120px;
+}
+
+.menu-option-price {
+    background-color: #f1c935;
+    padding: 10px;
+}
+
+.menu-option-desc {
+    line-height: 40px;
+    font-weight: 100;
+}
+
+.menu-option input {
+    width: 50px;
+    margin-left: 10px;
+    font-size: 90%;
+    text-align: right;
+}
+
+.menu-option span {
+    font-weight: 100;
+}
+
+.menu-option {
+    height: 30px;
+    line-height: 30px;
+    border-bottom: inset 1px;
+}

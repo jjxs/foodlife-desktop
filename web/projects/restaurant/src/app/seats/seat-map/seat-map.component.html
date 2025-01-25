@@ -1,0 +1,5 @@
+<div class="seat-list">
+  <div *ngFor="let item of seatList" [ngClass]="{seat:1, used:item.use_start}" (click)="goTo(item)">
+      No.{{item.seat_no}}
+  </div>
+</div>

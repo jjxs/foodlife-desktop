@@ -1,0 +1,21 @@
+<mat-sidenav-container class="mat-sidenav-content">
+    <div fxLayout="row"
+         style="height: 100%;"
+         fxLayoutAlign="center none">
+        <div class="list"
+             fxLayout="column"
+             fxFlex=100>
+            <div>
+                <app-payment-list></app-payment-list>
+            </div>
+            <!-- <app-shop-cost-edit [ngClass]="{'hide-div': !editFlg}"
+                                  [data]="ingData"
+                                  (saved)="onRefresh('ing')"
+                                  (edit)="onEditIng($event)"></app-shop-cost-edit>-->
+            <!-- <app-shop-cost-cat-reg [ngClass]="{'hide-div': !catFlg}"
+                         [data]="catData"
+                         (saved)="onRefresh('cat')"
+                         (edit)="onEditCat($event)"></app-shop-cost-cat-reg>-->
+        </div>
+    </div>
+</mat-sidenav-container>

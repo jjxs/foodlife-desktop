@@ -1,0 +1,35 @@
+.success-message {
+    margin-top: 3em;
+    font-size: 3em !important;
+    font-weight: 600;
+    text-align: center;
+    color: #535455;
+}
+
+table, td {
+    border: 1px solid #d0d0d0;
+    border-collapse: collapse;
+    padding: 0.5em;
+}
+
+.reg-form {
+    height: 100%;
+    overflow: auto;
+    background-color: white;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.info-header {
+    padding: 0.8em 0.4em;
+    font-weight: bold;
+    font-size: 1rem !important;
+    color: #494949;
+    border-left: solid 5px #7db4e6;
+    background-color: #c0e0ff;
+}
+
+.table-key {
+    width: 10rem;
+    font-weight: bold;
+    background-color: #f2f3f6;
+}

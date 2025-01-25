@@ -1,0 +1,196 @@
+<div class="componect-container">
+    <div class="search">
+        <div [formGroup]="searchForm"
+            fxLayout="row"
+            style="height: 60px;padding: 5px 0;"
+            fxLayoutGap="15px"
+            fxLayoutAlign="start center">
+            <div fxFlex=50
+                style="padding-left: 28px;">
+                <!-- <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox> -->
+                <button mat-icon-button
+                        matTooltip="更新"
+                        matTooltipPosition="below"
+                        (click)="onSearch()">
+                    <mat-icon class="mat-icon-edit">
+                        refresh
+                    </mat-icon>
+                </button>
+                <mat-menu #move="matMenu">
+                    <div style="width: 250px;"
+                        fxLayout="column">
+                        <div style="padding: 10px"
+                            fxLayout="column">
+                            <span>移動先を選択してください</span>
+                        </div>
+                        <div class="select-area">
+                            <ng-container *ngFor="let item of categories">
+                                <div mat-menu-item
+                                    (click)="onMove(item.id)"
+                                    fxLayout="row"
+                                    fxLayoutGap="10px">
+                                    <span>{{item.category_name}}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </mat-menu>
+            </div>
+            <div fxFlex=35>
+                <mat-form-field 
+                                fxFlex=100 style="height:40px;">
+                    <mat-label>キーワード</mat-label>
+                    <input matInput
+                        placeholder="費用名を入力"
+                        formControlName="keyword">
+                    <mat-icon class="search-icon"
+                            (click)="onSearch()"
+                            matSuffix>find_in_page</mat-icon>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-button
+                        (click)="onFilter()">
+                    絞り込み
+                    <mat-icon matSuffix
+                            class="mat-icon-filter">
+                        arrow_drop_down
+                    </mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="search-option"
+            *ngIf="filterFlg">
+            <div fxLayout="column">
+                <div *ngFor="let item of filterCat"
+                    fxLayout="row"
+                    fxLayoutGap="20px"
+                    style="padding: 10px 20px;">
+                    <div fxFlex=10>
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                    (change)="$event ? parentToggle(item) : null"
+                                    [checked]="filterSelection.isSelected(item.id)">
+                        </mat-checkbox>
+                        <span>{{item.category_name}}</span>
+                        <span *ngIf="item.children.length > 0">：</span>
+                    </div>
+                    <div fxFlex>
+                        <span *ngFor="let child of item.children"
+                            style="margin-right: 10px;display: inline-block;">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="childToggle($event, item, child)"
+                                        [checked]="childCheck(item, child)">
+                            </mat-checkbox>
+                            <span>{{child.category_name}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div *ngIf="filterCat.length === 0"
+                    fxLayout="column"
+                    fxLayoutAlign="start center">
+                    <span>カテゴリーデータがありません</span>
+                    <span>データを追加してください</span>
+                </div>
+                <div fxLayout="row"
+                    fxLayoutAlign="end none">
+                    <button mat-flat-button
+                            (click)="filterSelection.clear()"
+                            style="background-color: #3f51b5;color: white;margin-right: 3px;">絞り込み解除</button>
+                    <button mat-raised-button
+                            (click)="onSearch()"
+                            color="primary"
+                            style="margin-right: 4px;box-shadow: 0px 0px;">この条件で検索</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-container"
+         fxLayout="column"
+         fxLayoutAlign="start center">
+        <table mat-table
+               [dataSource]="dataSource" class="table"
+               matSort style="width:100%"
+               ng-show="false">
+            <ng-container matColumnDef="select">
+                <th mat-header-cell
+                    style="width: 5%;"
+                    *matHeaderCellDef>
+                </th>
+                <td mat-cell
+                    *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                                  (change)="$event ? selection.toggle(row) : null"
+                                  [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="cost_name">
+                <th mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    style="width: 20%;">費用名</th>
+                <td mat-cell
+                    *matCellDef="let row">{{row.cost_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="category_name">
+                <th mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    style="width: 22%;">費用カテゴリー</th>
+                <td mat-cell
+                    *matCellDef="let row">{{row.category_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="cost">
+                <th mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    style="width: 22%;">費用</th>
+                <td mat-cell
+                    *matCellDef="let row">{{row.cost}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="pay_time">
+                <th mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    style="width: 22%;">支払時間</th>
+                <td mat-cell
+                    *matCellDef="let row">{{row.pay_time | date:'yyyy/MM/dd' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="button">
+                <th mat-header-cell
+                    *matHeaderCellDef
+                    style="width: auto;"></th>
+                <td mat-cell
+                    *matCellDef="let row">
+                    <button mat-icon-button
+                            matTooltip="編集"
+                            matTooltipPosition="before"
+                            (click)="onEdit(row)">
+                        <mat-icon class="mat-icon-edit">
+                            edit_outline
+                        </mat-icon>
+                    </button>
+                    <button mat-icon-button
+                            matTooltip="削除"
+                            matTooltipPosition="after"
+                            (click)="onDelete(row)">
+                        <mat-icon class="mat-icon-edit">
+                            delete
+                        </mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row
+                *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
+            <tr mat-row
+                *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <app-table-empty-message [dataSource]="dataSource"
+                                 #empty></app-table-empty-message>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<div [formGroup]="editForm" fxLayout="column" fxLayoutAlign="start center">
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <input autocomplete="off" matInput placeholder="ユーザー名" formControlName="username" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('username').valid || editForm.get('username').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <input type="password" matInput placeholder="パスワード" formControlName="password" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('password').valid || editForm.get('password').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <input type="password" matInput placeholder="確認パスワード" formControlName="password1" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('password1').valid || editForm.get('password1').untouched" id="pass_show">
+        <div class="callout" id="pass_show1">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="名" formControlName="first_name">
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('first_name').valid || editForm.get('first_name').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="姓" formControlName="last_name">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" style="width: 80%;margin-bottom: 12px">
+        <mat-checkbox formControlName="is_active">有効</mat-checkbox>
+    </div>
+    <!--
+    <div fxLayout="row" style="width: 80%;margin-bottom: 12px">
+        <mat-checkbox formControlName="is_staff">スタッフ権限</mat-checkbox>
+    </div>
+    <div fxLayout="row" style="width: 80%;margin-bottom: 12px">
+        <mat-checkbox formControlName="is_superuser">スーパーユーザー権限</mat-checkbox>
+    </div>
+    -->
+    <div fxLayout="row" style="width: 80%;margin-top: 2em;" fxLayoutAlign="end none">
+        <button mat-raised-button color="primary" (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="onSave()">保存</button>
+    </div>
+</div>

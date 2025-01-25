@@ -1,0 +1,54 @@
+.list {
+    height: 100%;
+    overflow: auto;
+    background-color: white;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hide-div {
+    display: none !important;
+}
+
+
+/* タブー  */
+
+
+/* .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+    color: white;
+} */
+
+
+/* .mat-button-toggle-checked {
+    background-color: #3452b4;
+} */
+
+.mat-button-toggle-group-appearance-standard,
+.mat-button-toggle-standalone.mat-button-toggle-appearance-standard {
+    font-weight: 600;
+    line-height: 40px;
+    padding: 0 12px;
+    font-size: 14px;
+}
+
+
+/* 右ボタン */
+
+.mat-button,
+.mat-fab,
+.mat-flat-button,
+.mat-icon-button,
+.mat-mini-fab,
+.mat-raised-button,
+.mat-stroked-button {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    /* font-size: 21px; */
+    font-weight: 500;
+}
+
+.mat-raised-button.mat-primary,
+.mat-fab.mat-primary,
+.mat-mini-fab.mat-primary {
+    /* background-color: #3f51b4; */
+    padding: 3px 19px;
+    /* font-size: 21px; */
+}

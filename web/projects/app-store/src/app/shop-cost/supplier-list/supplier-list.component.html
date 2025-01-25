@@ -1,0 +1,66 @@
+<div class="componect-container">
+    <div class="table-container"
+         fxLayout="column"
+         fxLayoutAlign="start center">
+        <table mat-table
+               [dataSource]="dataSource" class="table"
+               matSort style="width:100%"
+               ng-show="false">
+            <ng-container matColumnDef="sup_name">
+                <th mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    style="width: 20%;">支払い先</th>
+                <td mat-cell
+                    *matCellDef="let row">{{row.sup_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="sup_tel">
+                <th mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    style="width: 22%;">連絡先</th>
+                <td mat-cell
+                    *matCellDef="let row">{{row.sup_tel}}</td>
+            </ng-container>
+            <ng-container matColumnDef="sup_addr">
+                <th mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    style="width: 22%;">アドレス</th>
+                <td mat-cell
+                    *matCellDef="let row">{{row.sup_addr}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="button">
+                <th mat-header-cell
+                    *matHeaderCellDef
+                    style="width: auto;"></th>
+                <td mat-cell
+                    *matCellDef="let row">
+                    <button mat-icon-button
+                            matTooltip="編集"
+                            matTooltipPosition="before"
+                            (click)="onEdit(row)">
+                        <mat-icon class="mat-icon-edit">
+                            edit_outline
+                        </mat-icon>
+                    </button>
+                    <button mat-icon-button
+                            matTooltip="削除"
+                            matTooltipPosition="after"
+                            (click)="onDelete(row)">
+                        <mat-icon class="mat-icon-edit">
+                            delete
+                        </mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row
+                *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
+            <tr mat-row
+                *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <app-table-empty-message [dataSource]="dataSource"
+                                 #empty></app-table-empty-message>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div style="height: 100%;width: 100%;padding: 10px;"
+     fxLayout="column">
+    <app-errors [formGroup]="dataForm"></app-errors>
+    <div fxLayout="column"
+         [formGroup]="dataForm"
+         style="height: inherit;"
+         fxLayoutAlign="space-around none">
+        <mat-form-field>
+            <input matInput
+                   placeholder="表示名"
+                   formControlName="display_name"
+                   required>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput
+                   placeholder="表示順"
+                   type="number"
+                   formControlName="display_order">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="親カテゴリー"
+                        formControlName="group_id">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let item of parents"
+                            [value]="item.id">
+                    {{item.display_name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div fxLayout="row"
+             fxLayoutAlign="center none">
+            <button mat-raised-button
+                    (click)="onCancel()"
+                    color="primary">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button mat-raised-button
+                    (click)="onAdd()"
+                    color="primary">追加</button>
+        </div>
+    </div>
+</div>

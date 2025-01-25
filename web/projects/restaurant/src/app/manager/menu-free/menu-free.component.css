@@ -1,0 +1,40 @@
+.menu-add {
+    margin: 10px;
+}
+
+.title {
+    width: 100%;
+    border-radius: 10px;
+    align-content: center;
+    background-color: #df5f0066;
+    margin: 10px;
+    text-align: center;
+    border: solid;
+    border-color: #df5f0047;
+    color: #464242;
+    padding: 12px 0 12px 0;
+    display: inline-block;
+}
+
+.menu-list {
+    height: calc(100vh - 200px);
+    overflow-y: hidden;
+    column-count: 4;
+    -moz-column-count: 4;
+    /* Firefox */
+    -webkit-column-count: 4;
+    /* Safari 和 Chrome */
+    /* 规定列之间 40 像素的间隔： */
+    /* -moz-column-gap: 40px; */
+    /* Firefox */
+    /* -webkit-column-gap: 40px; */
+    /* Safari 和 Chrome */
+    /* column-gap: 40px; */
+    /* 规定列之间的宽度、样式和颜色规则： */
+    /* -moz-column-rule: 3px outset #ff0000; */
+    /* Firefox */
+    /* -webkit-column-rule: 3px outset #ff0000; */
+    /* Safari and Chrome */
+    /* column-rule: 3px outset #ff0000; */
+    column-fill: auto;
+}

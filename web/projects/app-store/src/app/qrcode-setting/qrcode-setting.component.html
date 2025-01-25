@@ -1,0 +1,66 @@
+<mat-sidenav-container class="mat-sidenav-content">
+    <div fxLayout="row"
+         style="height: 100%;"
+         fxLayoutAlign="center none">
+        <div class="list"
+             fxLayout="column"
+             fxFlex=100>
+             
+                <mat-toolbar color="basic">
+                    <div class="nav-title">設備管理</div>
+                    <button mat-icon-button matTooltip="更新" matTooltipPosition="below" (click)="onSearch()">
+                        <mat-icon class="mat-icon-edit">
+                            refresh
+                        </mat-icon>
+                    </button>
+                </mat-toolbar>
+
+                <div class="componect-container">
+                    <div class="table-container" fxLayout="column" fxLayoutAlign="start center">
+                        <table class="app-grid" style="width: 100%">
+                            <tr>
+                                <th>
+                                    設備
+                                </th>
+                                <th>
+                                    状態
+                                </th>
+                                <th>
+                                    アップロード時間
+                                </th>
+                                <th>
+                                    最終登録時間
+                                </th>
+                                <th></th>
+                            </tr>
+                            <ng-container *ngFor="let machine of dataSource.data">
+                                <tr>
+                                    <td>
+                                        {{machine.sign}}
+                                    </td>
+                                    <td>
+                                        {{machine.status ? '✓' : ''}}
+                                    </td>
+                                    <td>
+                                        {{machine.update_data | date:'yyyy/MM/dd HH:mm' }}
+                                    </td>
+                                    <td>
+                                        {{machine.last_data | date:'yyyy/MM/dd HH:mm' }}
+                                    </td>
+                                    <td>
+                                        <button *ngIf="machine.status" color="warn" mat-raised-button (click)="onDelete(machine)">
+                                            解除    
+                                        </button>
+                                        <button *ngIf="!machine.status" color="primary" mat-raised-button (click)="onBind(machine)">
+                                            使用    
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </table>
+                        <app-table-empty-message [dataSource]="dataSource" #empty></app-table-empty-message>
+                    </div>
+                </div>
+        </div>
+    </div>
+</mat-sidenav-container>

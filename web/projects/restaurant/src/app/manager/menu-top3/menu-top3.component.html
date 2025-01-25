@@ -1,0 +1,34 @@
+<div [formGroup]="editForm" _ngcontent-ppv-c33="" class="ng-tns-c33-7" fxlayout="row"
+    fxlayoutalign="space-around center"
+    style="width: 100%; height: 100%; flex-direction: row; box-sizing: border-box; display: flex; place-content: center space-around; align-items: center;"
+    ng-reflect-fx-layout="row" ng-reflect-fx-layout-align="space-around center">
+    <div _ngcontent-ppv-c33="" class="ng-tns-c33-7"
+        style="border: 1px solid #FFCA97;width: 451px;height: 579px;position: absolut;margin-left: -249px;margin-top: -31px;position: absolute;">
+        <input matInput formControlName="id" style="display: none;">
+        <img src="{{site_image_host}}{{menu_top_data['image']}}" style="width:100%;height: 100%;" *ngIf="!image">
+        <img [src]="image" style="width:100%;height: 100%;" *ngIf="image">
+        <!-- <img [src]="imageFull" style="width:100%;height: 100%;" *ngIf="imageFull"> -->
+    </div>
+    <div
+        style="border: 1px solid #FFCA97;width: 443px;height: 282px;position: absolute;margin-left: 212px;margin-top: -178px;">
+    </div>
+    <div
+        style="border: 1px solid #FFCA97;width: 443px;height: 282px;position: absolute;margin-left: 212px;margin-top: 116px;">
+    </div>
+    <div fxLayout="column" fxLayoutAlign="start center" style="margin-top: -681px;margin-left: -151px;" fxFlex=30>
+        <div>
+            <button mat-button style="width: 100px;" [matMenuTriggerFor]="menu">
+                写真編集
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="onSelectPhoto()">写真選択</button>
+                <button mat-menu-item (click)="onDeletePhoto()">写真削除</button>
+            </mat-menu>
+        </div>
+        <input type="file" style="display: none" accept=".png,.jpg,.jpeg" (change)="onChangeFileInput()" #fileInput>
+    </div>
+    <div style="margin-top: -699px;margin-right: 474px;">
+        <button mat-raised-button class="menu-add" color="primary" (click)="onSave()">確定</button>
+    </div>
+</div>

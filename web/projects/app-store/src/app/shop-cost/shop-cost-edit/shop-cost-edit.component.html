@@ -1,0 +1,88 @@
+<div [formGroup]="editForm"
+     fxLayout="column"
+     fxLayoutAlign="start left">
+    <!--<mat-toolbar color="basic">
+        <mat-icon class="mat-back-icon"
+                  (click)="onCancel()">
+            arrow_back
+        </mat-icon>
+        <div style="margin-left: 5px;font-size: 1.0rem !important;">費用詳細編集</div>
+    </mat-toolbar>-->
+    <h1 style="margin-left: 5px;font-size: 1.5rem !important;">費用詳細編集</h1>
+    <div fxLayout="row"
+         style="width: 80%;margin-top:40px;">
+        <mat-form-field fxFlex=100>
+            <input matInput
+                   placeholder="費用名"
+                   required
+                   formControlName="cost_name"
+                   autocomplete="off">
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('cost_name').valid || editForm.get('cost_name').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row"
+         style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <mat-select placeholder="カテゴリー"
+                        formControlName="cost_category_id" required>
+                <mat-option *ngFor="let cat of categories"
+                            [value]="cat.id">
+                    <span *ngFor="let level of cat.levels;">&nbsp;&nbsp;&nbsp;&nbsp;</span>{{cat.category_name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('cost_category_id').valid || editForm.get('cost_category_id').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row"
+         fxLayoutAlign="space-between none"
+         fxLayoutGap="15px"
+         style="width: 80%;">
+        <mat-form-field fxFlex>
+            <input matInput
+                   placeholder="費用"
+                   type="number"
+                   required
+                   formControlName="cost">
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('cost').valid || editForm.get('cost').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    
+    <div fxLayout="row"
+         fxLayoutAlign="space-between none"
+         fxLayoutGap="15px"
+         style="width: 40%;">
+         <mat-form-field class="example-full-width" style="width:100%;">
+            <input matInput [matDatepicker]="picker2" placeholder="支払時間" formControlName="pay_time" required >
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker2></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('pay_time').valid || editForm.get('pay_time').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+
+    <div fxLayout="row"
+         style="width: 80%;"
+         fxLayoutAlign="end none">
+        <button mat-raised-button
+                color="primary"
+                (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button
+                color="primary"
+                (click)="onSave()">保存</button>
+    </div>
+</div>

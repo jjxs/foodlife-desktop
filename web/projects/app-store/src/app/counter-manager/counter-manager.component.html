@@ -1,0 +1,150 @@
+<mat-sidenav-container class="mat-sidenav-content">
+    <div fxLayout="row"
+         style="height: 100%;"
+         fxLayoutAlign="center none">
+        <div class="list"
+             fxLayout="column"
+             fxFlex=100>
+             
+                <mat-toolbar color="basic" fxLayoutGap="20px">
+                    <div class="nav-title">会計管理</div>
+                    <div>
+                        <input matInput [matDatepicker]="picker1" placeholder="" [formControl]="begin" (dateChange)="change($event, 'begin')" style="text-align: center;">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1 panelClass="example-month-picker">
+                        </mat-datepicker>
+                        <input matInput [matDatepicker]="picker2" placeholder="" [formControl]="end" (dateChange)="change($event,'end')" style="text-align: center;">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2 panelClass="example-month-picker">
+                        </mat-datepicker>
+                    </div>
+                    <!-- <mat-label>メニュー名</mat-label>
+                        <input  matInput formControlName="paymethoed" [matAutocomplete]="auto" required>
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of payMethodMaster | async" [value]="option.id">
+                                {{option.display_name}}
+                            </mat-option>
+                        </mat-autocomplete> -->
+                    <!-- <mat-label>支払い方法</mat-label> -->
+                    <!-- <mat-label style="margin:0px 10px;">支払い方法</mat-label> -->
+                    <mat-select  placeholder="支払い方法" [formControl]="paymethod" fxFlex=8 (selectionChange)="selectionChanges($event)">
+                        <mat-option value="">全部</mat-option>
+                        <mat-option *ngFor="let item of payMethodMaster" [value]="item.id">
+                            {{item.display_name}}
+                        </mat-option>
+                    </mat-select>
+                    
+                    <section style="font-size: 16px;">
+                        <label >領収書：</label>
+                        <mat-checkbox (change)="changeCheckbox($event)" style="margin-left: 10px; " [formControl]="receipt_al"><span style="font-weight: normal;font-size: 16px;">あり</span>
+                        </mat-checkbox>
+                        <mat-checkbox (change)="changeCheckbox($event)" style="margin-left: 10px; " [formControl]="receipt_ns"><span style="font-weight: normal;font-size: 16px;">なし</span>
+                        </mat-checkbox>
+                      </section>
+                      <section style="font-size: 16px;">
+                        <label>状態：</label>
+                        <mat-checkbox (change)="changeCheckbox($event)" style="margin-left: 10px; " [formControl]="delete_ns"><span style="font-weight: normal;font-size: 16px;">正常</span>
+                        </mat-checkbox>
+                        <mat-checkbox (change)="changeCheckbox($event)" style="margin-left: 10px; " [formControl]="delete_al"><span style="font-weight: normal;font-size: 16px;">削除</span>
+                        </mat-checkbox>
+                      </section>
+                    <!-- <mat-checkbox (change)="changeCheckbox($event)" style="margin-left: 10px; " [formControl]="canceled"><span style="font-weight: normal;font-size: 16px;">キャンセル</span>
+                    </mat-checkbox> -->
+                    
+                </mat-toolbar>
+
+                <div class="componect-container">
+                    <div class="table-container" fxLayout="column" fxLayoutAlign="start center">
+                        <table class="app-grid" style="width: 100%">
+                            <tr>
+                                <th>
+                                    No.
+                                </th>
+                                <th>
+                                    支払方法
+                                </th>
+                                <th>
+                                    実際支払金額（税込）
+                                </th>
+                                <th>
+                                    割引
+                                </th>
+                                <th>
+                                    減額
+                                </th>
+                                <th>
+                                    計算金額（減額前、税込）
+                                </th>
+                                <th>
+                                    預り
+                                </th>
+                                <th>
+                                    お釣
+                                </th>
+                                <th>
+                                    時間
+                                </th>
+                                <th></th>
+                            </tr>
+                            <ng-container *ngFor="let detail of dataSource.data">
+                                <tr>
+                                    <td>
+                                        <ng-container *ngIf="detail.print_count>0">「領収書あり」<br/>
+                                        </ng-container>
+                                        {{detail.no}}
+                                    </td>
+                                    <td>
+                                        {{detail.display_name   }}
+                                    </td>
+                                    <td>
+                                        {{detail.amounts_actually | currency:'￥':'symbol':'1.0-0'}}
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="detail.cut">
+                                            {{detail.cut_value | currency:'￥':'symbol':'1.0-0'}}({{detail.cut}}%) 
+                                        </ng-container>
+                                        <ng-container *ngIf="!detail.cut">-</ng-container>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="detail.reduce">
+                                            {{detail.reduce | currency:'￥':'symbol':'1.0-0'}}
+                                        </ng-container>
+                                        <ng-container *ngIf="!detail.reduce">-</ng-container>
+                                    </td>
+                                    <td>
+                                        {{detail.amounts_payable | currency:'￥':'symbol':'1.0-0'}}
+                                    </td>
+                                    <td>
+                                        {{detail.pay | currency:'￥':'symbol':'1.0-0'}}
+                                    </td>
+                                    <td>
+                                        {{detail.change | currency:'￥':'symbol':'1.0-0'}}
+                                    </td>
+                                    <td>
+                                        {{detail.create_time | date:'HH:mm'}}
+                                    </td>
+                                    <td>
+                                        <button mat-icon-button matTooltip="削除" matTooltipPosition="after" (click)="onDelete(detail)">
+                                            <mat-icon class="mat-icon-edit">
+                                                delete
+                                            </mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                            <tr *ngIf="dataSource.data.length > 0">
+                                <td></td>
+                                <td style="color:black; font-weight:bold">合計：</td>
+                                <td>{{count_amounts_actually | currency:'￥':'symbol':'1.0-0' }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{count_amounts_payable | currency:'￥':'symbol':'1.0-0' }}</td>
+                                <td colspan="4"></td>
+                            </tr>
+                        </table>
+                        <app-table-empty-message [dataSource]="dataSource" #empty></app-table-empty-message>
+                    </div>
+                </div>
+        </div>
+    </div>
+</mat-sidenav-container>

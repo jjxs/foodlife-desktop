@@ -1,0 +1,40 @@
+<div [formGroup]="editForm" fxLayout="column" fxLayoutAlign="start center">
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="用户账号" autocomplete="off" formControlName="user_id" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('user_id').valid || editForm.get('user_id').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span><div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="用户名称" autocomplete="off" formControlName="user_name">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <input oninput="value=value.replace(/[^\d]/g,'')"  matInput placeholder="連絡先" autocomplete="off" formControlName="user_tel" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('user_tel').valid || editForm.get('user_tel').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="アドレス" autocomplete="off" formControlName="user_address" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('user_address').valid || editForm.get('user_address').untouched" id="address">
+        <div class="callout" id="address1">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;margin-top: 2em;" fxLayoutAlign="end none">
+        <button mat-raised-button color="primary" (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="onSave()">保存</button>
+    </div>
+</div>

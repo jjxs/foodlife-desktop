@@ -1,0 +1,80 @@
+<mat-sidenav-container class="mat-sidenav-content">
+  <div fxLayout="row" style="height: 100%;" fxLayoutAlign="center none">
+    <div class="list" fxLayout="column" fxFlex=100>
+      <div>
+        <mat-toolbar color="basic">
+          <div>外卖用户</div>
+          <span class="toolbar-spacer"></span>
+          <button mat-raised-button color="primary" (click)="onAdd()">用户追加</button>
+        </mat-toolbar>
+        <div class="componect-container">
+          <div class="search">
+            <div fxLayout="row" style="height: 60px;padding: 5px 0;" fxLayoutGap="15px"
+              fxLayoutAlign="start center">
+              <div fxFlex=5 style="padding-left: 28px;">
+                <button mat-icon-button matTooltip="更新" matTooltipPosition="below" (click)="onSearch()">
+                  <mat-icon class="mat-icon-edit">
+                    refresh
+                  </mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="table-container" fxLayout="column" fxLayoutAlign="start center">
+            <table class="app-grid" style="width: 100%">
+              <tr>
+                <th style="font-weight: bold;width: 15%;">
+                  用户账号
+                </th>
+                <th style="font-weight: bold;width: 15%;">
+                  用户名称
+                </th>
+                <th style="font-weight: bold;width: 15%;">
+                  連絡先
+                </th>
+                <th style="font-weight: bold;width: 30%;">
+                  アドレス
+                </th>
+                <th style="font-weight: bold;width: 15%;">
+                  座席名称
+                </th>
+                <th></th>
+              </tr>
+              <ng-container *ngFor="let item of dataSource.data">
+                <tr>
+                  <td>
+                    {{item.user_id}}
+                  </td>
+                  <td>
+                    {{item.user_name}}
+                  </td>
+                  <td>
+                    {{item.user_tel}}
+                  </td>
+                  <td>
+                    {{item.user_address}}
+                  </td>
+                  <td>
+                    {{item.seat_name}}
+                  </td>
+                  <td>
+                    <button mat-icon-button matTooltip="編集" matTooltipPosition="before" (click)="onEdit(item)">
+                      <mat-icon class="mat-icon-edit">
+                        edit_outline
+                      </mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="削除" matTooltipPosition="after" (click)="onDelete(item)">
+                      <mat-icon class="mat-icon-edit">
+                        delete
+                      </mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-sidenav-container>

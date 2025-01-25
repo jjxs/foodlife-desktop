@@ -1,0 +1,40 @@
+<div [formGroup]="editForm" fxLayout="column" fxLayoutAlign="start center">
+    <h1 style="text-align: center;font-size: 1.5rem !important;">贈品メニュー追加</h1>
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+
+        <mat-form-field fxFlex=100 appearance="fill">
+            <mat-label>メニュー名</mat-label>
+            <input  matInput formControlName="menu_id" [matAutocomplete]="auto" required>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
+                {{option.name}}
+              </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+    </div>
+    <span [hidden]="editForm.get('menu_id').valid || editForm.get('menu_id').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <mat-form-field fxFlex=100>
+            <input matInput placeholder="扣除数" formControlName="use_gift_count" required>
+        </mat-form-field>
+    </div>
+    <span [hidden]="editForm.get('use_gift_count').valid || editForm.get('use_gift_count').untouched">
+        <div class="callout">
+            必須項目です
+        </div>
+    </span>
+    <div fxLayout="row" style="width: 80%;margin-top: 2rem;">
+        <div fxFlex=100>
+            <mat-checkbox formControlName="flg">有効</mat-checkbox>
+        </div>
+    </div>
+    <div fxLayout="row" style="width: 80%;margin-top: 2em;" fxLayoutAlign="end none">
+        <button mat-raised-button color="primary" (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="onSave()">保存</button>
+    </div>
+</div>

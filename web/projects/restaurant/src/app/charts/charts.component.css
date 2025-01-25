@@ -1,0 +1,17 @@
+.container-charts {
+    height: 100%;
+    width: 100vw;
+}
+
+.chart-tab {
+    height: calc(100vh - 45px);
+    /* overflow-y: auto; */
+}
+
+/* .mat-tab-body-wrapper {
+    overflow: unset !important;
+}
+
+.mat-tab-body {
+    overflow: unset !important;
+} */

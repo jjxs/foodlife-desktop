@@ -1,0 +1,86 @@
+<div class="content-container">
+  <div fxLayout="column" style="height: 550px;">
+    <div [formGroup]="editForm" fxLayout="column">
+      <div fxLayout="row" style="width: 30%;margin-top: 2rem;margin-left: 2%;">
+        <mat-form-field fxFlex=100>
+          <input matInput placeholder="グループ名" autocomplete="off" formControlName="group_name" required>
+        </mat-form-field>
+      </div>
+      <span [hidden]="editForm.get('group_name').valid || editForm.get('group_name').untouched">
+        <div class="callout">
+          必須項目です
+        </div>
+      </span>
+
+      <div fxLayout="row" style="height: 100%">
+        <div fxFlex="50%" class="box-border" style="height: 85%;">
+          <div fxFlexAlign="start" style="position: relative;height:50px;line-height: 80px;margin-left:7px">
+            ユーザー選択済み
+          </div>
+          <mat-list style="height: 320px; overflow-y: auto;">
+            <ng-container *ngFor="let user of user_group_detail;index as index">
+              <mat-list-item class="example-item">
+                {{user.username}}
+                <span class="toolbar-spacer"></span>
+                <button mat-mini-fab color="accent" style="margin-left: 30px">
+                  <mat-icon class="example-icon" (click)="removeMenu($event, user)">clear</mat-icon>
+                </button>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </mat-list>
+        </div>
+        <div fxFlex="50%" class="box-border" style="height: 85%;">
+          <div fxFlexAlign="start" style="position: relative;height:50px;line-height: 80px;">
+            ユーザー組
+          </div>
+          <mat-list style="height: 320px;overflow-y: auto;">
+            <ng-container *ngFor="let user of users">
+              <mat-list-item class="example-item">
+                {{user.username}}
+                <span class="toolbar-spacer"></span>
+                <button mat-mini-fab color="primary" (click)="addMenu($event, user)">
+                  <mat-icon class="example-icon">chevron_left</mat-icon>
+                </button>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </mat-list>
+        </div>
+      </div>
+      <div style="margin-top: 10px;">メニュー権限選択</div>
+      <div fxLayout="row" style="margin-top: 20px;margin-bottom: -6px;margin-left: 10px;">
+        <mat-checkbox formControlName="counter" style="width: 170px;" value="/counter">レジ</mat-checkbox>
+        <mat-checkbox formControlName="menu" style="width: 170px;" value="/menu">メニュー</mat-checkbox>
+        <mat-checkbox formControlName="menu-gift" style="width: 170px;" value="/menu-gift">贈品メニュー管理</mat-checkbox>
+        <mat-checkbox formControlName="seats" style="width: 170px;" value="/seats">坐席</mat-checkbox>
+        <mat-checkbox formControlName="order" style="width: 170px;" value="/order">注文</mat-checkbox>
+        <mat-checkbox formControlName="kitchen" style="width: 170px;" value="/kitchen">キッチン</mat-checkbox>
+      </div>
+      <div fxLayout="row" style="margin-top: 20px;margin-bottom: -6px;margin-left: 10px;">
+        <mat-checkbox formControlName="settings" style="width: 170px;" value="/settings">設定</mat-checkbox>
+        <mat-checkbox formControlName="manager" style="width: 170px;" value="/manager">管理画面</mat-checkbox>
+        <mat-checkbox formControlName="menumgmt" style="width: 170px;" value="/store/menu-mgmt">メユー管理</mat-checkbox>
+        <mat-checkbox formControlName="ingredients" style="width: 170px;" value="/store/ingredients">材料管理</mat-checkbox>
+        <mat-checkbox formControlName="inventorycontrol" style="width: 170px;" value="/store/inventory-control">在庫一覧</mat-checkbox>
+        <mat-checkbox formControlName="inventoryprofit" style="width: 170px;" value="/store/inventory-profit">棚卸管理</mat-checkbox>
+      </div>
+      <div fxLayout="row" style="margin-top: 20px;margin-left: 10px;">
+        <mat-checkbox formControlName="shopcost" style="width: 170px;" value="/store/shop-cost">費用管理</mat-checkbox>
+        <mat-checkbox formControlName="charts" style="width: 170px;" value="/charts">経営分析</mat-checkbox>
+        <mat-checkbox formControlName="usermanager" style="width: 170px;" value="/store/user-manager">ユーザー管理</mat-checkbox>
+        <mat-checkbox formControlName="user" style="width: 170px;" value="/store/user">会員管理</mat-checkbox>
+        <mat-checkbox formControlName="usergroup" style="width: 170px;" value="/store/user-group">グループ管理</mat-checkbox>
+        <mat-checkbox formControlName="payment" style="width: 170px;" value="/store/payment">支払方法</mat-checkbox>
+      </div>
+      <div fxLayout="row" style="margin-top: 14px;margin-left: 10px;">
+        <mat-checkbox formControlName="setsubimanager" style="width: 170px;" value="/store/setsubi-manager">設備管理</mat-checkbox>
+        <mat-checkbox formControlName="staff" style="width: 170px;" value="/staff/*">スタッフ</mat-checkbox>
+      </div>
+    </div>
+    <div fxLayout="row" style="width: 90%;margin-top: 2em;" fxLayoutAlign="end none">
+      <button mat-raised-button color="primary" (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+      <button mat-raised-button color="primary" (click)="onSave()">保存</button>
+    </div>
+  </div>
+</div>

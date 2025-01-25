@@ -1,0 +1,54 @@
+<div class="chart-list">
+  <h3>曜日別売上統計表</h3>
+  <mat-form-field class="example-full-width"  style="width:120px;">
+    <input matInput [matDatepicker]="picker1" placeholder="開始時間" [formControl]="date1" (dateChange)="dateChange($event, 1)" >
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker touchUi #picker1></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" style="width:120px; margin-left: 20px;">
+    <input matInput [matDatepicker]="picker2" placeholder="終了時間" [formControl]="date2" (dateChange)="dateChange($event, 2)" >
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker touchUi #picker2></mat-datepicker>
+  </mat-form-field>
+
+  <!--
+  <button mat-raised-button color="primary" (click)="getData()" style="margin-left:10px;">
+    検索
+  </button>
+  -->
+  <div echarts [options]="chartOption" style="text-align:left;"></div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- week Column -->
+    <ng-container matColumnDef="week">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.week}} </td>
+    </ng-container>
+
+    <!-- lunch Column -->
+    <ng-container matColumnDef="lunch">
+      <th mat-header-cell *matHeaderCellDef> ランチ </th>
+      <td mat-cell *matCellDef="let element"> {{element.lunch | currency:'￥':'symbol':'1.0-0'}} </td>
+    </ng-container>
+
+    <!-- dinner Column -->
+    <ng-container matColumnDef="dinner">
+      <th mat-header-cell *matHeaderCellDef> ディナー </th>
+      <td mat-cell *matCellDef="let element"> {{element.dinner | currency:'￥':'symbol':'1.0-0'}} </td>
+    </ng-container>
+    
+    <!-- total Column -->
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef> 合計 </th>
+      <td mat-cell *matCellDef="let element"> {{element.total | currency:'￥':'symbol':'1.0-0'}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

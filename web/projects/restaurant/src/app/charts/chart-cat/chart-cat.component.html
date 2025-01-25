@@ -1,0 +1,90 @@
+<div class="chart-list">
+  <h3>料理分類別売上統計表</h3>
+  <div fxLayout="column" style="padding: 20px 0;">
+    <div>
+      <div fxLayout="row" class="example-full-width" style="margin-left: 20px;">
+        <div>
+          <span style="float: left;width: 50px; text-align: right;">分類: </span>
+        </div>
+        <div style="height: 100%;">
+          <div style="height: 100%;text-align:left;">
+            <mat-checkbox *ngFor="let row of groups"
+                          style="float: left; margin: 0 10px; width: 80px;"
+                          (change)="checkGroup($event, row)"
+                          [value]="row.id"
+                          checked="{{row.checked ? 'checked' : ''}}">
+              {{row.display_name}}
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row" style="margin-top: 10px; width: 100%;">
+      <div fxLayoutAlign="end center" style="margin-left: 20px; width: 70px;">
+        <span style="float: right; text-align: left; margin-bottom: 15px;">期間: </span>
+      </div>
+      <div style="text-align:left;">
+        <mat-form-field class="example-full-width"  style="width:120px; margin-left: 20px;">
+          <input matInput [matDatepicker]="picker1" placeholder="開始時間" [formControl]="date1" (dateChange)="dateChange($event, 1)" >
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker1></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" style="width:120px; margin-left: 20px;">
+          <input matInput [matDatepicker]="picker2" placeholder="終了時間" [formControl]="date2" (dateChange)="dateChange($event, 2)" >
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayoutAlign="start end">
+        <button mat-raised-button color="primary" (click)="getData()" style="margin-left: 20px;margin-bottom: 20px;margin-right: 40px;height: 36px;">
+          検索
+        </button>
+      </div>
+    </div>
+  </div>
+    <!--
+    <div echarts [options]="chartOption"></div>
+    -->
+  <div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- cat_name Column -->
+      <ng-container matColumnDef="cat_name">
+        <th mat-header-cell *matHeaderCellDef> 分類 </th>
+        <td mat-cell *matCellDef="let element"> {{element.cat_name}} </td>
+      </ng-container>
+
+      <!-- total Column -->
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 注文数量 </th>
+        <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+      </ng-container>
+      
+      <!-- total_price Column -->
+      <ng-container matColumnDef="total_price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 売上 </th>
+        <td mat-cell *matCellDef="let element"> {{element.total_price | currency:'￥':'symbol':'1.0-0'}} </td>
+      </ng-container>
+      
+      <!-- dinner Column -->
+      <ng-container matColumnDef="dinner">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ディナー</th>
+        <td mat-cell *matCellDef="let element"> {{element.dinner | currency:'￥':'symbol':'1.0-0'}} </td>
+      </ng-container>
+      
+      <!-- lunch Column -->
+      <ng-container matColumnDef="lunch">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ランチ</th>
+        <td mat-cell *matCellDef="let element"> {{element.lunch | currency:'￥':'symbol':'1.0-0'}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <div style="overflow-y: auto;">
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </div>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+<div [formGroup]="editForm"
+     fxLayout="column"
+     style="padding: 20px 80px;">
+
+    <div fxLayout="row">
+        <div fxLayout="column"
+             style="margin-top:60px;"
+             fxFlex=70>
+            <div fxLayout="row"
+                fxLayoutAlign="space-between none"
+                fxLayoutGap="15px">
+                <mat-form-field fxFlex=100>
+                    <input matInput
+                        placeholder="名称"
+                        required
+                        formControlName="name">
+                </mat-form-field>
+            </div>
+            <span [hidden]="editForm.get('name').valid || editForm.get('name').untouched">
+                <div class="callout">
+                    必須項目です
+                </div>
+            </span>
+            <div fxLayout="row"
+                fxLayoutAlign="space-between none"
+                fxLayoutGap="15px">
+                <mat-form-field fxFlex>
+                    <input matInput
+                        placeholder="表示名"
+                        required
+                        formControlName="display_name">
+                </mat-form-field>
+            </div>
+            <span [hidden]="editForm.get('display_name').valid || editForm.get('display_name').untouched">
+                <div class="callout">
+                    必須項目です
+                </div>
+            </span>
+            <div fxLayout="row"
+                fxLayoutAlign="space-between none"
+                fxLayoutGap="15px">
+                <mat-form-field fxFlex>
+                    <input matInput
+                        placeholder="順番"
+                        formControlName="display_order">
+                </mat-form-field>
+            </div>
+            <!-- <div fxLayout="row"
+                fxLayoutAlign="space-between none"
+                fxLayoutGap="15px"
+                style="display: none;">
+                <mat-form-field fxFlex>
+                    <textarea matInput
+                        placeholder="画像"
+                        formControlName="option"></textarea>
+                </mat-form-field>
+            </div> -->
+        </div>
+
+        <div fxLayout="column"
+             fxLayoutAlign="start center"
+             style="padding: 60px 0 0 20px;"
+             fxFlex=30>
+            <span style="width: 180px;height: 120px;">
+                <img src="{{site_image_host1}}{{menu_top_data}}"
+                    style="width:180px;height: 120px;"
+                    *ngIf="!image">
+                <img [src]="image"
+                    style="width:180px;height: 120px;"
+                    *ngIf="image">
+                <img [src]="imageFull"
+                    style="width:180px;height: 120px;"
+                    *ngIf="imageFull">
+            </span>
+            <div>
+                <button mat-button
+                        style="width: 100px;"
+                        [matMenuTriggerFor]="menu">
+                        写真編集
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item
+                            (click)="onSelectPhoto()">写真選択</button>
+                    <button mat-menu-item
+                            (click)="onDeletePhoto()">写真削除</button>
+                </mat-menu>
+            </div>
+            <input type="file"
+                style="display: none"
+                accept=".png,.jpg,.jpeg"
+                (change)="onChangeFileInput()"
+                #fileInput>
+        </div>
+    </div>
+
+    <div fxLayout="row"
+         style="align-self: center;margin-top: 3em;margin-bottom:30px;"
+         fxLayoutAlign="end none">
+        <button mat-raised-button
+                color="primary"
+                (click)="onCancel()">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button
+                color="primary"
+                (click)="onSave()">保存</button>
+    </div>
+</div>
