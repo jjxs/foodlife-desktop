@@ -44,7 +44,7 @@ export class SeatManagerComponent implements OnInit {
                 this.dataSource.data = response.data;
                 if (this.dataSource.data.length>0) {
                     this.dataSource.data.forEach(e => {
-                        let qrLink = "http://{{saas_id}}.app.food-life.co.jp/?s={{saas_id}}&seat={{seat_id}}&sign={{36_code}}"
+                        let qrLink = "http://{{saas_id}}.app.new-food-life.shop/?s={{saas_id}}&seat={{seat_id}}&sign={{36_code}}"
                         e.isHasQrImage = false
                         let str = saasId + e.id
                         e.qr = qrLink.replace(/{{saas_id}}/g,saasId).replace("{{seat_id}}",e.id).replace("{{36_code}}", this.to36code(str))
