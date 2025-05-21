@@ -2,33 +2,30 @@
   <div fxLayout="column">
     <div class="title">
       メユー：
-      <mat-select 
-          placeholder="菜单" class="select"
-          [(ngModel)]="course_menu_id">
-          <mat-option *ngFor="let menu of orign_menus"
-            [value]="menu.id">
-            [{{menu.no}}] {{menu.name}}
+      <mat-select placeholder="菜单" class="select" [(ngModel)]="course_menu_id">
+        <mat-option *ngFor="let menu of orign_menus" [value]="menu.id">
+          [{{menu.no}}] {{menu.name}}
         </mat-option>
       </mat-select>
 
-      <mat-checkbox style="margin-left: 20px;" [(ngModel)]="is_set">　セット</mat-checkbox>
+      <mat-checkbox style="margin-left: 20px;" [(ngModel)]="is_set">　コース</mat-checkbox>
     </div>
     <div fxLayout="row" style="height: 100%">
-      <div fxFlex="50%" class="box-border" style="height: calc(100vh - 190px );">    
+      <div fxFlex="50%" class="box-border" style="height: calc(100vh - 190px );">
         <mat-list style="height: 100%; overflow-y: auto;">
           <div style="color:red;">
-          {{currentTitle}}：
-          </div>  
-          
+            {{currentTitle}}：
+          </div>
+
           <ng-container *ngFor="let menu of menu_course_detail;index as index">
             <mat-list-item class="example-item">
               [{{menu.no}}]{{menu.name}}
               <span class="toolbar-spacer"></span>
-              
+
               <button [disabled]="index === 0" mat-mini-fab color="primary" (click)="onUp($event, menu, index)">
                 <mat-icon>arrow_upward</mat-icon>
               </button>
-              <button mat-mini-fab color="accent"  style="margin-left: 30p;">
+              <button mat-mini-fab color="accent" style="margin-left: 30p;">
                 <mat-icon class="example-icon" (click)="removeMenu($event, menu)">clear</mat-icon>
               </button>
             </mat-list-item>
@@ -44,7 +41,7 @@
             </mat-tab>
           </mat-tab-group>
         </div>
-        <mat-list  style="height: calc(100vh - 250px);overflow-y: auto;">
+        <mat-list style="height: calc(100vh - 250px);overflow-y: auto;">
           <ng-container *ngFor="let menu of menus">
             <mat-list-item class="example-item">
               [{{menu.no}}]{{menu.name}}
@@ -56,21 +53,24 @@
             <mat-divider></mat-divider>
           </ng-container>
         </mat-list>
-          
-        <button [disabled]="currentIndex==1" mat-raised-button color="primary" style=" margin-top: 5px;height: 40px;margin-left: 20px; " (click)="pre()">
+
+        <button [disabled]="currentIndex==1" mat-raised-button color="primary"
+          style=" margin-top: 5px;height: 40px;margin-left: 20px; " (click)="pre()">
           上一步
         </button>
-        <button [disabled]="menu_course_detail.length==0" mat-raised-button color="primary" style=" margin-top: 5px;height: 40px;margin-left: 20px; " (click)="next()">
+        <button [disabled]="menu_course_detail.length==0" mat-raised-button color="primary"
+          style=" margin-top: 5px;height: 40px;margin-left: 20px; " (click)="next()">
           下一步
         </button>
-        
-        <button *ngIf="menu_course_detail.length" mat-raised-button color="primary" style=" margin-top: 5px;height: 40px;margin-left: 10px; " (click)="save($event)">
+
+        <button *ngIf="menu_course_detail.length" mat-raised-button color="primary"
+          style=" margin-top: 5px;height: 40px;margin-left: 10px; " (click)="save($event)">
           保存
         </button>
 
       </div>
     </div>
-  
+
   </div>
   <!--
   <div fxLayout="column" class="text-list">
